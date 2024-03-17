@@ -5,7 +5,7 @@ import { Login } from './pages/auth/Login/Login';
 import { Signup } from "./pages/auth/signup/Signup";
 import { Error } from './pages/error/Error';
 import { Dashboard } from "./pages/dashboard/Dashboard";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from '@vercel/analytics/react';
 import { AuthProvider } from './context/authContext';
 import {
   createBrowserRouter,
