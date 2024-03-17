@@ -1,0 +1,83 @@
+.signup-container {
+    background-color: var(--antique);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+} 
+
+.signup-container-main {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    gap: 2em;
+    padding: 10px;
+    height: 71%;
+    width: 65%;
+    border-radius: 10px;
+
+}
+
+.signup-container-main form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    justify-content: center;
+}
+
+.signup-container-main button {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    color: white;
+    cursor: pointer;
+}
+
+.signup-container-main input {
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+.signup-left {
+    height: 100%;
+}
+
+.signup-left img {
+    height: 230px;  
+}
+
+.signup-right {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    align-items: center;   
+    justify-content: center; 
+    margin: auto;
+}
+
+.login-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+    .signup-left {
+        display: none;
+    }
+
+    .signup-container-main {
+        width: 100%;
+        gap: 1em;
+        height: 100%;
+    }
+}

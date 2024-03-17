@@ -1,0 +1,34 @@
+.toast {
+    position: fixed;
+    top: -100px; /* Start off screen */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out; /* Transition opacity and top */
+}
+
+.toast.show {
+    top: 2em; /* Slide in */
+    opacity: 1;
+}
+
+.toast.hide {
+    top: -100px; /* Slide out */
+    opacity: 0;
+}
+
+
+.toast.error {
+    background-color: red;
+    color: white;
+    
+}
+
+.toast.success {
+    background-color: green;
+    color: white;
+}

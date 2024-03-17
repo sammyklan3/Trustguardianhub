@@ -1,0 +1,174 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header nav {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.logo a{
+  text-decoration: none;
+    background-image: linear-gradient(to right, var(--accent-color) 0%, var(--primary-color) 100%);
+    font-size: 14px;
+    font-weight: bolder;
+    -webkit-background-clip: text;
+    /* For webkit-based browsers */
+    background-clip: text;
+    color: transparent;
+    /* Make text transparent */
+}
+
+.dashboard-header .login-link {
+  background-color: var(--primary-color);
+  padding: 10px;
+  border-radius: 19px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.dashboard-header .login-link a {
+  color: white;
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container a:first-child {
+  text-decoration: none;
+  background-image: linear-gradient(to right, var(--accent-color) 0%, var(--primary-color) 100%);
+  font-size: large;
+  font-weight: bolder;
+  -webkit-background-clip: text;
+  /* For webkit-based browsers */
+  background-clip: text;
+  color: transparent;
+  /* Make text transparent */
+}
+
+.hamburger {
+  position: relative;
+  display: none;
+  width: 35px;
+  cursor: pointer;
+  appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.hamburger .bar, .hamburger::after, .hamburger::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 5px;
+  background-color: var(--primary-color);
+  margin: 6px 0px;
+  transition: 0.4s ease-in-out;
+}
+
+.hamburger.is-active::before {
+  transform: rotate(-45deg) translate(-8px, 6px);
+}
+
+.hamburger.is-active .bar {
+  opacity: 0;
+}
+
+.hamburger.is-active::after {
+  transform: rotate(45deg) translate(-9px, -8px);
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: -100%; /* Initially hide the mobile nav off-screen */
+  width: 100%;
+  min-height: 100vh;
+  display: block;
+  z-index: 98;
+  background-color: white;
+  opacity: 1;
+  padding-top: 120px;
+  transition: left 0.3s ease; /* Add transition for smooth animation */
+}
+
+.mobile-nav.is-active {
+  left: 0; /* Slide in the mobile nav when is-active class is applied */
+}
+
+.mobile-nav a {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto 16px;
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 12px 6px;
+  color: white;
+  background-color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.mobile-nav a:hover {
+  background-color: lightcyan;
+}
+
+.mobile-nav-toggle {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  padding: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  z-index: 99;
+
+}
+
+.login-link a {
+  padding: 0px 2px;
+}
+
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .container a:first-child {
+    text-decoration: none;
+    background-image: linear-gradient(to right, var(--accent-color) 0%, var(--primary-color) 100%);
+    font-size: large;
+    font-weight: bolder;
+    -webkit-background-clip: text;
+    /* For webkit-based browsers */
+    background-clip: text;
+    color: transparent;
+    /* Make text transparent */
+  }
+
+  .hamburger {
+    display: block;
+  } 
+
+  .container nav {
+    display: none;
+  }
+}

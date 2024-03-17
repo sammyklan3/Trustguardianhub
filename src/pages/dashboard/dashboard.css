@@ -1,0 +1,55 @@
+.dashboard-container{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 6%;
+    gap: 4em;
+    height: 100vh;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.dashboard-content ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.dashboard-content li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--light-gray);
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+
+.dashboard-content button {
+    background-color: var(--hover-color);
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    border: none;
+    padding: 9px;
+    border-radius: 12px;
+    transition: background-color 0.5s ease;
+}
+
+.dashboard-content button:hover {
+    background-color: var(--deep-blue);
+    color: white;
+
+}
+
+.report-details {
+    display: flex;
+    align-items: center;
+    gap: 4em;
+}
+
+.report-info small{
+    color: var(--secondary-color);
+}

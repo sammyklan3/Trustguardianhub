@@ -1,0 +1,104 @@
+.login-container {
+    background-color: var(--antique);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+} 
+
+.login-container-main {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    gap: 2em;
+    padding: 10px;
+    height: 70%;
+    width: 65%;
+    border-radius: 10px;
+
+}
+
+.login-container-main form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    justify-content: center;
+}
+
+.login-container-main button {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    color: white;
+    cursor: pointer;
+}
+
+.login-container-main input {
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+.login-left {
+    height: 100%;
+}
+
+.login-left img {
+    height: 230px;  
+}
+
+.login-right {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    align-items: center;   
+    justify-content: center; 
+    margin: auto;
+}
+
+.login-register-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+
+.loader {
+    border: 4px solid rgba(80, 78, 78, 0.1);
+    border-top: 4px solid var(--antique);
+    margin: auto;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+    .login-left {
+        display: none;
+    }
+
+    .login-container-main {
+        width: 100%;
+        gap: 1em;
+        height: 100%;
+    }
+}

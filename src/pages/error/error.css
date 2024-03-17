@@ -1,0 +1,13 @@
+.error-container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    place-items: center;
+    gap: 4rem;
+}
+
+.error-container small {
+    color: gray;
+}
