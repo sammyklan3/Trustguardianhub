@@ -31,7 +31,7 @@
 
 .dashboard-header .login-link {
   background-color: var(--primary-color);
-  padding: 10px;
+  padding: 6px;
   border-radius: 19px;
   text-decoration: none;
   transition: 0.3s;
@@ -152,16 +152,8 @@
     align-items: center;
   }
 
-  .container a:first-child {
-    text-decoration: none;
-    background-image: linear-gradient(to right, var(--accent-color) 0%, var(--primary-color) 100%);
-    font-size: large;
-    font-weight: bolder;
-    -webkit-background-clip: text;
-    /* For webkit-based browsers */
-    background-clip: text;
-    color: transparent;
-    /* Make text transparent */
+  .dashboard-header .login-link {
+    padding: 10px;
   }
 
   .hamburger {
