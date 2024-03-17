@@ -1,8 +1,9 @@
 import "./login.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { axiosInstance } from "../../../api/axiosInstance";
 import { Toast } from "../../../components/toast/Toast";
+import { AuthContext } from "../../../context/authContext";
 
 export const Login = () => {
 
@@ -12,11 +13,19 @@ export const Login = () => {
     password: ""
   });
 
+  const { login, user } = useContext(AuthContext);
+
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
   // Function for handling change in the form state
   const handleChange = (e) => {
@@ -33,7 +42,9 @@ export const Login = () => {
       setIsLoading(true);
       const response = await axiosInstance.post("/login", loginData);
 
-      if (response.status == 200) {
+      if (response.status === 200) {
+        const { token } = response.data;
+        login(token);
         setShowToast(true);
         setToastType("success");
         setToastMessage(response.data.message);
@@ -42,7 +53,7 @@ export const Login = () => {
     } catch (err) {
       setShowToast(true);
       setToastType("error");
-      setToastMessage(err.response.data.error);
+      setToastMessage(err.response ? err.response.data.error : "An error occurred");
     } finally {
       setIsLoading(false);
     }

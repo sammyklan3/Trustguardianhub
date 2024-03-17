@@ -1,9 +1,23 @@
 import "./dashboard.css";
+import { useContext, useEffect } from "react";
 import { Navbar } from "../../components/Navbar/Navbar";
+import { useNavigate } from 'react-router-dom';
 import { FaBook } from "react-icons/fa";
 import PropTypes from 'prop-types';
+import { AuthContext } from "../../context/authContext";
 
 export const Dashboard = () => {
+
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+  
+
   return (
     <div className="dashboard-container">
       <Navbar />

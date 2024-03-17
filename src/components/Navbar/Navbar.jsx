@@ -1,14 +1,23 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import "./navbar.css";
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/authContext';
 
 export const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prevState => !prevState);
   };
+
+  const logoutBtn = () => {
+    logout();
+    navigate("/login");
+    
+  }
 
   const handleTouchStart = (e) => {
     touchStartX = e.touches[0].clientX;
@@ -57,9 +66,8 @@ export const Navbar = () => {
               <div className="container">
                 <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 <nav>
-                  <NavLink to="/dashboard/profile">Profile</NavLink>
+                  <NavLink to="#" onClick={logoutBtn}>Logout</NavLink>
                   <NavLink to="/dashboard/settings">Settings</NavLink>
-                  <NavLink to="/dashboard/notifications">Notifications</NavLink>
                 </nav>
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
@@ -70,7 +78,7 @@ export const Navbar = () => {
               <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
                 Close
               </button>
-              <NavLink to="/dashboard/profile">Profile</NavLink>
+              <NavLink to="#" onClick={logoutBtn}>Logout</NavLink>
               <NavLink to="/dashboard/settings">Settings</NavLink>
               <NavLink to="/dashboard/notifications">Notifications</NavLink>
             </nav>
