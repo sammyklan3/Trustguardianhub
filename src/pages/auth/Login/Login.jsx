@@ -25,6 +25,9 @@ export const Login = () => {
     if (user) {
       navigate("/dashboard");
     }
+
+    document.title = "TrustGuardianHub | Login";
+    
   }, [user, navigate]);
 
   // Function for handling change in the form state

@@ -1,6 +1,6 @@
 import "./signup.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { axiosInstance } from "../../../api/axiosInstance";
 import { Toast } from "../../../components/toast/Toast";
 
@@ -17,6 +17,10 @@ export const Signup = () => {
   const [toastType, setToastType] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.title = "TrustGuardianHub | Signup";
+  })
 
   const handleChange = (e) => {
     const { name, value } = e.target;

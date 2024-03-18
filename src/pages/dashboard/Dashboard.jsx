@@ -15,6 +15,9 @@ export const Dashboard = () => {
     if (!user) {
       navigate("/login");
     }
+
+    document.title = "TrustGuardianHub";
+
   }, [user, navigate]);
   
 
