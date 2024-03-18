@@ -1,17 +1,17 @@
 import React from 'react';
+import './index.css';
 import ReactDOM from 'react-dom/client';
+import { Analytics } from "@vercel/analytics/react"
 import { Homepage } from './pages/Home/Homepage';
+import { AuthProvider } from './context/authContext';
 import { Login } from './pages/auth/Login/Login';
 import { Signup } from "./pages/auth/signup/Signup";
 import { Error } from './pages/error/Error';
 import { Dashboard } from "./pages/dashboard/Dashboard";
-import { Analytics } from '@vercel/analytics/react';
-import { AuthProvider } from './context/authContext';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import './index.css';
 
 const router = createBrowserRouter([
   {
