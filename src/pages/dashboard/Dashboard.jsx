@@ -22,7 +22,7 @@ export const Dashboard = () => {
     <div className="dashboard-container">
       <Navbar />
       <div className="dashboard-content">
-        <h1>Welcome, Sammy</h1>
+        <h1>Welcome, {user.username}</h1>
         <p>We&apos;re glad you&apos;re here! Below you will find all the reports you&apos;ve submitted and their current status. You can also edit and update your reports if needed.</p>
         <ul>
 
