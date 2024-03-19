@@ -8,24 +8,24 @@ import { AuthContext } from "../../context/authContext";
 
 export const Dashboard = () => {
 
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
+    if (!token) {
       navigate("/login");
     }
 
     document.title = "TrustGuardianHub";
 
-  }, [user, navigate]);
+  }, [token, navigate]);
   
 
   return (
     <div className="dashboard-container">
       <Navbar />
       <div className="dashboard-content">
-        <h1>Welcome, {user.username}</h1>
+        <h1>Welcome, {user ? user.username : "Guest"}</h1>
         <p>We&apos;re glad you&apos;re here! Below you will find all the reports you&apos;ve submitted and their current status. You can also edit and update your reports if needed.</p>
         <ul>
 

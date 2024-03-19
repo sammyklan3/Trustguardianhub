@@ -13,7 +13,7 @@ export const Login = () => {
     password: ""
   });
 
-  const { login, user } = useContext(AuthContext);
+  const { login, user, token } = useContext(AuthContext);
 
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -22,13 +22,13 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (token) {
       navigate("/dashboard");
     }
 
     document.title = "TrustGuardianHub | Login";
     
-  }, [user, navigate]);
+  }, [token, navigate]);
 
   // Function for handling change in the form state
   const handleChange = (e) => {
