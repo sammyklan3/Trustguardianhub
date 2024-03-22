@@ -1,0 +1,9 @@
+.report-details {
+    display: flex;
+    align-items: center;
+    gap: 4em;
+}
+
+.report-info small{
+    color: var(--secondary-color);
+}

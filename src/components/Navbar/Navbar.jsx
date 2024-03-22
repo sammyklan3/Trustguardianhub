@@ -1,12 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import "./navbar.css";
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/authContext';
+
 
 export const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
@@ -14,9 +13,7 @@ export const Navbar = () => {
   };
 
   const logoutBtn = () => {
-    logout();
-    navigate("/login");
-    
+    navigate("/logout");
   }
 
   const handleTouchStart = (e) => {

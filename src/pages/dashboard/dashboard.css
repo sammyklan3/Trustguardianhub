@@ -25,7 +25,6 @@
     background-color: var(--light-gray);
     padding: 10px;
     border-radius: 10px;
-    
 }
 
 .dashboard-content button {
@@ -44,12 +43,3 @@
 
 }
 
-.report-details {
-    display: flex;
-    align-items: center;
-    gap: 4em;
-}
-
-.report-info small{
-    color: var(--secondary-color);
-}

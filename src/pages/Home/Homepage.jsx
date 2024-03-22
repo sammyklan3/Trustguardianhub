@@ -4,6 +4,7 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import { NavLink } from "react-router-dom";
 
 export const Homepage = () => {
+  
   return (
     <div className="homepage-container">
       <Navbar />

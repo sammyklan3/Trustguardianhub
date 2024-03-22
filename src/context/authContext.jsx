@@ -25,6 +25,15 @@ export const AuthProvider = ({ children }) => {
   const login = (newToken) => {
     try {
       const decoded = jwtDecode(newToken);
+      // Calculate token expiration time
+      const expirationTime = decoded.exp * 1000;
+      const expirationThreshold = Date.now() + (14 * 24 * 60 * 60 * 1000); // 14 days in milliseconds
+      // Check if token is expired or about to expire within the next 14 days
+      if (expirationTime <= Date.now() || expirationTime >= expirationThreshold) {
+        console.error("Token is expired or about to expire within the next 14 days");
+        logout(); // Clear expired token
+        return;
+      }
       setUser(decoded);
       localStorage.setItem("token", newToken);
       setToken(newToken);
@@ -32,6 +41,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Error decoding token:", error);
     }
   };
+  
 
   const logout = () => {
     localStorage.removeItem("token");

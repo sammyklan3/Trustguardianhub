@@ -1,63 +1,81 @@
 import "./dashboard.css";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { useNavigate } from 'react-router-dom';
-import { FaBook } from "react-icons/fa";
 import PropTypes from 'prop-types';
 import { AuthContext } from "../../context/authContext";
+import { axiosInstance } from "../../api/axiosInstance";
+import { ReportItem } from "../../components/report/Report";
+import { Login } from "../auth/Login/Login";
+import { Loader } from "../../components/loader/Loader";
 
 export const Dashboard = () => {
 
   const { user, token } = useContext(AuthContext);
+  const [reports, setReports] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-
     document.title = "TrustGuardianHub";
 
+    // Fetch reports
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("/reports", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        let responseData = response.data;
+
+        // Check if responseData is an object and convert it to an array
+        if (typeof responseData === "object" && !Array.isArray(responseData)) {
+          responseData = Object.values(responseData);
+        }
+
+        setReports(responseData[1]);
+        console.log(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
   }, [token, navigate]);
-  
 
-  return (
-    <div className="dashboard-container">
-      <Navbar />
-      <div className="dashboard-content">
-        <h1>Welcome, {user ? user.username : "Guest"}</h1>
-        <p>We&apos;re glad you&apos;re here! Below you will find all the reports you&apos;ve submitted and their current status. You can also edit and update your reports if needed.</p>
-        <ul>
+  if (!user) {
+    return <Login />;
 
-          <li>
-            <div className="report-details">
-              <FaBook />
-              <div className="report-info">
-                <p>Report#1: Fake Check Scam</p>
-                <small>Submitted: 4/14/22</small>
-              </div>
-            </div>
-            <button>Edit</button>
-          </li>
+  } else if (!reports) {
 
-          <li>
-            <div className="report-details">
-              <FaBook />
-              <div className="report-info">
-                <p>Report#1: Fake Check Scam</p>
-                <small>Submitted: 4/14/22</small>
-              </div>
-            </div>
-            <button>Edit</button>
-          </li>
-
-        </ul>
+    return <Loader />;
+    
+  } else {
+    return (
+      <div className="dashboard-container">
+        <Navbar />
+        <div className="dashboard-content">
+          <h1>Welcome, {user ? user.username : "Guest"}</h1>
+          <p>We&apos;re glad you&apos;re here! Below you will find all the reports you&apos;ve submitted and their current status. You can also edit and update your reports if needed.</p>
+          <ul>
+            {Array.isArray(reports) ? (
+              reports.map((report, index) => (
+                <ReportItem key={index} title={report.title} description={report.description} image={report.image_url} />
+              ))
+            ) : (
+              reports && <ReportItem title={reports.title} description={reports.description} image={reports.image_url} />
+            )}
+          </ul>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 Dashboard.propTypes = {
+  user: PropTypes.object, // Example prop types, adjust as per your actual props
+  token: PropTypes.string,
+};
 
-}
 
