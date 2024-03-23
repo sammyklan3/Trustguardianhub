@@ -1,7 +1,8 @@
 import React from 'react';
 import './index.css';
 import ReactDOM from 'react-dom/client';
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+import { CreateReport } from './pages/AddReport/CreateReport';
 import { Homepage } from './pages/Home/Homepage';
 import { AuthProvider } from './context/authContext';
 import { Login } from './pages/auth/Login/Login';
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/logout",
     element: <Logout />,
+  },
+  {
+    path: "/create-report",
+    element: <CreateReport />,
   },
   {
     path: "*",
