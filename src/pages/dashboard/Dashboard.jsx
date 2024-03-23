@@ -1,7 +1,7 @@
 import "./dashboard.css";
 import { useContext, useEffect, useState } from "react";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AuthContext } from "../../context/authContext";
 import { axiosInstance } from "../../api/axiosInstance";
@@ -57,6 +57,7 @@ export const Dashboard = () => {
     return (
       <div className="dashboard-container">
         <Navbar />
+
         {error ? (
           <div className="error">{error}</div>
         ) : loading ? (
@@ -76,7 +77,16 @@ export const Dashboard = () => {
             </ul>
           </div>
         ) : (
-          <div className="no-reports">No reports available</div>
+          <>
+            <div className="dashboard-header">
+              <div className="dashboard-header-text">
+                <h3>Create a report</h3>
+                <p>Submit a report to TrustGuardianHub and we will take care of the rest.</p>
+              </div>
+              <NavLink to="/create-report" className="btn">Create Report</NavLink>
+            </div>
+            <div className="no-reports">No reports available</div>
+          </>
         )
 
         }

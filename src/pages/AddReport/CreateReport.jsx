@@ -4,9 +4,11 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import { Toast } from "../../components/toast/Toast";
 import { axiosInstance } from "../../api/axiosInstance";
 import { AuthContext } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 export const CreateReport = () => {
   const { token, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -53,6 +55,7 @@ export const CreateReport = () => {
 
     try {
       setIsLoading(true);
+      console.log(formData);
 
       const response = await axiosInstance.post("/create", formData, {
         headers: {
@@ -64,14 +67,18 @@ export const CreateReport = () => {
       if (response.status === 200) {
         setShowToast(true);
         setToastType("success");
-        setToastMessage(response.data.message);
+        setToastMessage("Report submitted successfully, wait for review");
+
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 3000);
       }
 
     } catch (error) {
       console.error(error);
       setShowToast(true);
       setToastType("error");
-      setToastMessage(error.response ? error.response.data.message : "An error occurred");
+      setToastMessage(error.response ? error.response.data.error : "An error occurred");
     } finally {
       setIsLoading(false);
     }
@@ -81,6 +88,8 @@ export const CreateReport = () => {
     <div className="createreport-container">
       <Navbar />
       <form onSubmit={handleSubmit} className="report-form" encType="multipart/form-data">
+        <h2>Create a Report</h2>
+        <hr />
         <div>
           <label htmlFor="title">Title:</label>
           <input
@@ -114,7 +123,7 @@ export const CreateReport = () => {
           />
         </div>
         <button type="submit" disabled={isLoading}>
-          {isLoading ? <div className="loader"></div> : "Login"}
+          {isLoading ? <div className="loader"></div> : "Submit Report"}
         </button>
         {showToast && (
           <Toast

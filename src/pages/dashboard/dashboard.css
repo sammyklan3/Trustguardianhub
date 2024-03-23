@@ -43,3 +43,23 @@
 
 }
 
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 1em;
+    border-radius: 10px;
+}
+
+.dashboard-header a {
+    text-decoration: none;
+    background-color: var(--deep-blue);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.dashboard-header-text p{
+    color: #888383;
+}
