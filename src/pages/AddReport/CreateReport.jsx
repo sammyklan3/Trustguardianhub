@@ -26,6 +26,8 @@ export const CreateReport = () => {
     userId: user ? user.userId : null,
   });
 
+  console.log(formData.userId);
+
   useEffect(() => {
     // Update userId in formData when user context changes
     setFormData(prevState => ({

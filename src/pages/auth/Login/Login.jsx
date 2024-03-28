@@ -13,7 +13,7 @@ export const Login = () => {
     password: ""
   });
 
-  const { login, user, token } = useContext(AuthContext);
+  const { login, token } = useContext(AuthContext);
 
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");

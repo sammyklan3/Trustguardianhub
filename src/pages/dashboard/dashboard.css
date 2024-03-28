@@ -43,7 +43,7 @@
 
 }
 
-.dashboard-header {
+.dashboard-header-cont {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,7 +52,7 @@
     border-radius: 10px;
 }
 
-.dashboard-header a {
+.dashboard-header-cont a {
     text-decoration: none;
     background-color: var(--deep-blue);
     color: white;

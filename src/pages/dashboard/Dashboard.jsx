@@ -16,7 +16,7 @@ export const Dashboard = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     document.title = "TrustGuardianHub";
 
@@ -41,7 +41,7 @@ export const Dashboard = () => {
         setReports(responseData[1]);
         console.log(responseData);
       } catch (error) {
-        setError(error.response.data.message);
+        setError(error.response.data.error);
       } finally {
         setLoading(false);
       }
@@ -78,7 +78,7 @@ export const Dashboard = () => {
           </div>
         ) : (
           <>
-            <div className="dashboard-header">
+            <div className="dashboard-header-cont">
               <div className="dashboard-header-text">
                 <h3>Create a report</h3>
                 <p>Submit a report to TrustGuardianHub and we will take care of the rest.</p>
