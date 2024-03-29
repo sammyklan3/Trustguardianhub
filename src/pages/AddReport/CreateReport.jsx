@@ -23,16 +23,14 @@ export const CreateReport = () => {
     title: "",
     description: "",
     image: undefined,
-    userId: user ? user.userId : null,
+    userId: user ? user.user_id : null,
   });
-
-  console.log(formData.userId);
 
   useEffect(() => {
     // Update userId in formData when user context changes
     setFormData(prevState => ({
       ...prevState,
-      userId: user ? user.userId : null,
+      userId: user ? user.user_id : null,
     }));
   }, [user]);
 
@@ -57,7 +55,6 @@ export const CreateReport = () => {
 
     try {
       setIsLoading(true);
-      console.log(formData);
 
       const response = await axiosInstance.post("/create", formData, {
         headers: {

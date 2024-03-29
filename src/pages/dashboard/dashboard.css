@@ -1,65 +1,32 @@
-.dashboard-container{
-    display: flex;
-    flex-direction: column;
+/* dashboard.css */
+.dashboard-container {
     padding: 10px 6%;
-    gap: 4em;
-    height: 100vh;
-}
-
-.dashboard-content {
     display: flex;
     flex-direction: column;
-    gap: 2em;
-}
+    gap: 3em;
+  }
 
-.dashboard-content ul {
+  .dashboard-content {
     display: flex;
     flex-direction: column;
-    gap: 1em;
-}
+    gap: 10px;
+  }
 
-.dashboard-content li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--light-gray);
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.dashboard-content button {
-    background-color: var(--hover-color);
-    cursor: pointer;
-    font-family: "Poppins", sans-serif;
-    border: none;
-    padding: 9px;
-    border-radius: 12px;
-    transition: background-color 0.5s ease;
-}
-
-.dashboard-content button:hover {
-    background-color: var(--deep-blue);
-    color: white;
-
-}
-
-.dashboard-header-cont {
+  .dashboard-header-cont {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #ccc;
+    border: 1px solid var(--light-gray);
     padding: 1em;
     border-radius: 10px;
-}
-
-.dashboard-header-cont a {
     text-decoration: none;
-    background-color: var(--deep-blue);
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-}
+    color: black;
+    font-size: 13px;
+  }
 
-.dashboard-header-text p{
-    color: #888383;
-}
+  .dashboard-content ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+  }

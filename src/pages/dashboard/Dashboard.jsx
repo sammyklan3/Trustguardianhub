@@ -8,6 +8,8 @@ import { axiosInstance } from "../../api/axiosInstance";
 import { ReportItem } from "../../components/report/Report";
 import { Login } from "../auth/Login/Login";
 import { Loader } from "../../components/loader/Loader";
+import { BsFillFilePlusFill } from "react-icons/bs";
+import { Toast } from "../../components/toast/Toast";
 
 export const Dashboard = () => {
 
@@ -15,8 +17,11 @@ export const Dashboard = () => {
   const [reports, setReports] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     document.title = "TrustGuardianHub";
 
@@ -39,7 +44,6 @@ export const Dashboard = () => {
         }
 
         setReports(responseData[1]);
-        console.log(responseData);
       } catch (error) {
         setError(error.response.data.error);
       } finally {
@@ -50,6 +54,28 @@ export const Dashboard = () => {
     fetchData();
   }, [token, navigate]);
 
+  const handleDelete = async (reportId) => {
+    try {
+      const response = await axiosInstance.delete(`/reports/${reportId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setShowToast(true);
+        setToastType("success");
+        setToastMessage(response.data.message);
+        // Update the local state to remove the deleted report
+        setReports(reports.filter(report => report.report_id !== reportId));
+      }
+    } catch (error) {
+      setShowToast(true);
+      setToastType("error");
+      setToastMessage(error.response ? error.response.data.error : "An error occurred");
+    }
+  };
+
   if (!user) {
     return <Login />;
 
@@ -58,21 +84,48 @@ export const Dashboard = () => {
       <div className="dashboard-container">
         <Navbar />
 
+        <NavLink to="/create-report" className="dashboard-header-cont">
+          <div className="dashboard-header-text">
+            <h3>Create a report</h3>
+          </div>
+          <p><BsFillFilePlusFill /></p>
+        </NavLink>
+
         {error ? (
           <div className="error">{error}</div>
         ) : loading ? (
           <Loader />
         ) : reports ? (
           <div className="dashboard-content">
-            <h1>Welcome, {user ? user.username : "Guest"}</h1>
-            <p>We&apos;re glad you&apos;re here! Below you will find all the reports you&apos;ve submitted and their current status. You can also edit and update your reports if needed.</p>
+            <h1>Discover reports 🚀</h1>
+            <hr />
+            {/* <p>We&apos;re glad you&apos;re here! Below you will find all the reports you&apos;ve submitted and their current status. You can also edit and update your reports if needed.</p> */}
             <ul>
               {Array.isArray(reports) ? (
                 reports.map((report, index) => (
-                  <ReportItem key={index} title={report.title} description={report.description} image={report.image_url} />
+                  <ReportItem
+                    key={index}
+                    title={report.title}
+                    description={report.description}
+                    image={report.image_url}
+                    username={report.username}
+                    profile_pic={report.profile_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
+                    user_id={report.user_id}
+                    report_id={report.report_id}
+                    onDelete={() => handleDelete(report.report_id)} // Pass onDelete callback
+                  />
                 ))
               ) : (
-                reports && <ReportItem title={reports.title} description={reports.description} image={reports.image_url} />
+                reports && <ReportItem
+                  title={reports.title}
+                  description={reports.description}
+                  image={reports.image_url}
+                  username={reports.username}
+                  profile_pic={reports.profile_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
+                  user_id={reports.user_id}
+                  report_id={reports.report_id}
+                  onDelete={() => handleDelete(reports.report_id)} // Pass onDelete callback
+                />
               )}
             </ul>
           </div>
@@ -90,6 +143,16 @@ export const Dashboard = () => {
         )
 
         }
+
+        {showToast && (
+          <Toast
+            message={toastMessage}
+            duration={3000}
+            type={toastType}
+            onClose={() => setShowToast(false)}
+          />
+        )}
+
       </div>
     )
   }

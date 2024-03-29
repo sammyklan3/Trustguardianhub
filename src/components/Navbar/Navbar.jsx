@@ -111,6 +111,32 @@ export const Navbar = () => {
             </nav>
           </>
         );
+
+        case "/profile":
+          return (
+            <>
+              <header>
+                <div className="container">
+                  <p className="logo">
+                    <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                  </p>
+                  <nav>
+                    <NavLink to="/dashboard/settings">Settings</NavLink>
+                  </nav>
+                  <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                    <div className="bar"></div>
+                  </button>
+                </div>
+              </header>
+              <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+                <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                  Close
+                </button>
+                <NavLink to="/dashboard/settings">Settings</NavLink>
+                <NavLink to="/dashboard/notifications">Notifications</NavLink>
+              </nav>
+            </>
+          );
       default:
         return null;
     }
