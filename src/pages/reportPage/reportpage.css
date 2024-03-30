@@ -1,0 +1,49 @@
+.report-page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 10px 6%;
+}
+
+.report-page-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.report-page-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;  
+}
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+     .report-page-image img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+     }
+
+     .report-page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid var(--light-gray);
+        padding: 5px;
+        border-radius: 10px;
+     }
+
+     .report-page-header img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+     }
+    
+}

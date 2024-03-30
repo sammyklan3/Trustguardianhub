@@ -89,7 +89,7 @@ export const ReportItem = ({ title, image, username, profile_pic, user_id, onDel
             
           </>
         ) : (
-          <NavLink to={`/report/${user_id}`} className="report-open">Open</NavLink>
+          <NavLink to={`/report/${report_id}`} className="report-open">Open</NavLink>
         )}
       </div>
     </li>

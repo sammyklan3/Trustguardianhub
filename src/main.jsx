@@ -11,6 +11,7 @@ import { Error } from './pages/error/Error';
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { ReportUpdate } from './pages/reportUpdate/ReportUpdate';
 import { Logout } from './pages/auth/logout/Logout';
+import { ReportPage } from './pages/reportPage/ReportPage';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/update-report/:id",
     element: <ReportUpdate />,
+  },
+  {
+    path: "/report/:id",
+    element: <ReportPage />,
   },
   {
     path: "*",
