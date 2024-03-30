@@ -68,7 +68,7 @@ export const Navbar = () => {
                 </p>
                 <nav>
                   <NavLink to="/notifications">Notifications</NavLink>
-                  <NavLink to="/profile"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D" alt={user.username} className="profile-image"/></NavLink>
+                  <NavLink to="/profile"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D" alt={user.username} className="profile-image" /></NavLink>
                 </nav>
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
@@ -79,9 +79,17 @@ export const Navbar = () => {
               <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
                 Close
               </button>
+
               <NavLink to="#" onClick={logoutBtn}>Logout</NavLink>
-              <NavLink to="/dashboard/settings">Settings</NavLink>
-              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+
+              <NavLink to="/profile">
+                <img
+                  src={user ? user.profile_url : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"}
+                  alt={user ? user.username : "default username"}
+                  className="profile-image"
+                />
+
+              </NavLink>
             </nav>
           </>
         );
@@ -112,31 +120,31 @@ export const Navbar = () => {
           </>
         );
 
-        case "/profile":
-          return (
-            <>
-              <header>
-                <div className="container">
-                  <p className="logo">
-                    <NavLink to="/dashboard">TrustGuardianHub</NavLink>
-                  </p>
-                  <nav>
-                    <NavLink to="/dashboard/settings">Settings</NavLink>
-                  </nav>
-                  <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
-                    <div className="bar"></div>
-                  </button>
-                </div>
-              </header>
-              <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
-                <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
-                  Close
+      case "/profile":
+        return (
+          <>
+            <header>
+              <div className="container">
+                <p className="logo">
+                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                </p>
+                <nav>
+                  <NavLink to="/dashboard/settings">Settings</NavLink>
+                </nav>
+                <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                  <div className="bar"></div>
                 </button>
-                <NavLink to="/dashboard/settings">Settings</NavLink>
-                <NavLink to="/dashboard/notifications">Notifications</NavLink>
-              </nav>
-            </>
-          );
+              </div>
+            </header>
+            <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+              <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                Close
+              </button>
+              <NavLink to="/dashboard/settings">Settings</NavLink>
+              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+            </nav>
+          </>
+        );
       default:
         return null;
     }

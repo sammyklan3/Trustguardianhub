@@ -1,13 +1,16 @@
 import "./profile.css";
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { AuthContext } from "../../context/authContext";
+import { DialogBox } from "../../components/dialogBox/DialogBox";
 
 export const Profile = () => {
   const { user, error, logout, deleteProfile } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+
+  console.log(user);
 
   useEffect(() => {
     if (!user) {
@@ -15,17 +18,13 @@ export const Profile = () => {
     }
   }, [user, navigate]);
 
-  const openDeleteConfirmation = () => {
-    setShowDeleteConfirmation(true);
-  };
-
-  const closeDeleteConfirmation = () => {
-    setShowDeleteConfirmation(false);
+  const toggleDialog = () => {
+    setShowDialog(prevState => !prevState);
   };
 
   const handleDeleteProfile = () => {
     // Close the confirmation dialog
-    closeDeleteConfirmation();
+    toggleDialog();
     // Call the deleteProfile function
     deleteProfile();
   };
@@ -35,61 +34,65 @@ export const Profile = () => {
       <Navbar />
       <div className="profile-content">
         <div className="profile-header">
-          <h1>Profile</h1>
           <img
             src={
-              user?.profile_url === "http://localhost:3000/public/null"
-                ? "https://via.placeholder.com/150"
+              user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                user?.profile_url === ""
+                ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
                 : user?.profile_url
             }
             alt="profile"
-            className="profile-image"
+            className="profile-content-image"
           />
+          <NavLink to="/edit-profile">Edit profile</NavLink>
+
         </div>
-        <div className="profile-info">
-          {user ? (
-            <div>
-              <div className="profile-item">
-                <p className="profile-label">Name:</p>
-                <p className="profile-value">{user.username}</p>
-              </div>
-              <div className="profile-item">
-                <p className="profile-label">Email:</p>
-                <p className="profile-value">{user.email}</p>
-              </div>
-              <div className="profile-item">
-                <p className="profile-label">Phone:</p>
-                <p className="profile-value">
-                  {user.phone ? user.phone : "No phone number added"}
-                </p>
-              </div>
-              <div className="profile-item">
-                <p className="profile-label">Address:</p>
-                <p className="profile-value">
-                  {user.address ? user.address : "No address added"}
-                </p>
-              </div>
+        {user ? (
+          <div className="profile-info">
+            <div className="profile-item">
+              <h3 className="profile-label">Username:</h3>
+              <p className="profile-value">{user.username}</p>
             </div>
-          ) : error ? (
-            <div className="error">{error}</div>
-          ) : null}
-        </div>
+            <hr />
+
+            <div className="profile-item">
+              <h3 className="profile-label">Email:</h3>
+              <p className="profile-value">{user.email}</p>
+            </div>
+            <hr />
+
+            <div className="profile-item">
+              <h3 className="profile-label">Phone:</h3>
+              <p className="profile-value">
+                {user.phone ? user.phone : "No phone number added"}
+              </p>
+            </div>
+            <hr />
+
+            <div className="profile-item">
+              <h3 className="profile-label">Address:</h3>
+              <p className="profile-value">
+                {user.address ? user.address : "No address added"}
+              </p>
+            </div>
+          </div>
+        ) : error ? (
+          <div className="error">{error}</div>
+        ) : null}
       </div>
 
       <div className="button-container">
         <button className="logout-btn" onClick={logout}>Logout</button>
-        <button className="delete-btn" onClick={openDeleteConfirmation}>Delete Profile</button>
+        <button className="delete-btn" onClick={toggleDialog}>Delete Account</button>
       </div>
 
       {/* Delete Confirmation Dialog */}
-      {showDeleteConfirmation && (
-        <div className="delete-confirmation">
-          <p>Are you sure you want to delete your profile?</p>
-          <div className="confirmation-buttons">
-            <button onClick={handleDeleteProfile}>Yes, Delete</button>
-            <button onClick={closeDeleteConfirmation}>Cancel</button>
-          </div>
-        </div>
+      {showDialog && (
+        <DialogBox
+          message="Are you sure you want to delete your account ?"
+          onConfirm={handleDeleteProfile}
+          onCancel={toggleDialog}
+        />
       )}
     </div>
   )

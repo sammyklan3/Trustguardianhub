@@ -20,7 +20,7 @@
     padding: 1em;
     border-radius: 10px;
     text-decoration: none;
-    color: black;
+    color: var(--deep-blue);
     font-size: 13px;
   }
 

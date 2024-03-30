@@ -22,6 +22,8 @@ export const Dashboard = () => {
   const [toastType, setToastType] = useState("");
   const navigate = useNavigate();
 
+  console.log(reports);
+
   useEffect(() => {
     document.title = "TrustGuardianHub";
 
@@ -112,6 +114,7 @@ export const Dashboard = () => {
                     profile_pic={report.profile_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
                     user_id={report.user_id}
                     report_id={report.report_id}
+                    date={report.created_at}
                     onDelete={() => handleDelete(report.report_id)} // Pass onDelete callback
                   />
                 ))
@@ -124,6 +127,7 @@ export const Dashboard = () => {
                   profile_pic={reports.profile_url || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"}
                   user_id={reports.user_id}
                   report_id={reports.report_id}
+                  date={reports.created_at}
                   onDelete={() => handleDelete(reports.report_id)} // Pass onDelete callback
                 />
               )}
