@@ -1,0 +1,66 @@
+.report-update {
+    padding: 10px 6%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.report-update-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.report-update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.report-update-form input {
+    font-family: "Poppins", sans-serif;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.report-update-form textarea {
+    font-family: "Poppins", sans-serif;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.report-update-form button {
+    font-family: "Poppins", sans-serif;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button.enabled {
+    background-color: var(--primary-color); /* Dark blue color */
+    color: #fff; /* White text color */
+  }
+  
+  .button.disabled {
+    background-color: #b0c4de; /* Light blue color */
+    color: #000; /* Black text color */
+  }
+
+  .report-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+  }

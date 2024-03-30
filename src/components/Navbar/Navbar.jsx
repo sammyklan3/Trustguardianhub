@@ -1,11 +1,12 @@
 import { useState, useContext } from 'react';
 import "./navbar.css";
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 
 
 export const Navbar = () => {
   const location = useLocation();
+  const { id } = useParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -145,6 +146,33 @@ export const Navbar = () => {
             </nav>
           </>
         );
+
+        case `/update-report/${id}`:
+        return (
+          <>
+            <header>
+              <div className="container">
+                <p className="logo">
+                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                </p>
+                <nav>
+                  <NavLink to="/dashboard/settings">Settings</NavLink>
+                </nav>
+                <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                  <div className="bar"></div>
+                </button>
+              </div>
+            </header>
+            <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+              <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                Close
+              </button>
+              <NavLink to="/dashboard/settings">Settings</NavLink>
+              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+            </nav>
+          </>
+        );
+
       default:
         return null;
     }

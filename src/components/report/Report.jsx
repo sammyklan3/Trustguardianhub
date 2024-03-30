@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/authContext";
 import { NavLink } from "react-router-dom";
 import { DialogBox } from "../dialogBox/DialogBox";
 
-export const ReportItem = ({ title, image, username, profile_pic, user_id, onDelete, date }) => {
+export const ReportItem = ({ title, image, username, profile_pic, user_id, onDelete, date, report_id }) => {
 
   const [showDialog, setShowDialog] = useState(false);
   const [timeSincePosted, setTimeSincePosted] = useState("");
@@ -76,7 +76,7 @@ export const ReportItem = ({ title, image, username, profile_pic, user_id, onDel
       <div className="report-actions">
         {user.user_id === user_id ? (
           <>
-            <NavLink to={`/report/${user_id}`} className="edit-link"><FaRegEdit /></NavLink>
+            <NavLink to={`/update-report/${report_id}`} className="edit-link"><FaRegEdit /></NavLink>
             <button className="delete-link" onClick={toggleDialog}><BsFillTrashFill /></button>
 
             {showDialog && (
@@ -105,4 +105,5 @@ ReportItem.propTypes = {
   user_id: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
   date: PropTypes.string.isRequired,
+  report_id: PropTypes.string.isRequired
 };

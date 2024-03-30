@@ -9,6 +9,7 @@ import { Login } from './pages/auth/Login/Login';
 import { Signup } from "./pages/auth/signup/Signup";
 import { Error } from './pages/error/Error';
 import { Dashboard } from "./pages/dashboard/Dashboard";
+import { ReportUpdate } from './pages/reportUpdate/ReportUpdate';
 import { Logout } from './pages/auth/logout/Logout';
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react"
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/update-report/:id",
+    element: <ReportUpdate />,
   },
   {
     path: "*",
