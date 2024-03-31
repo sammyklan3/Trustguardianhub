@@ -11,7 +11,7 @@
 .comment-user {
     display: flex;
     align-items: center;
-    gap: 2px;
+    justify-content: space-between;
 }
 
 .comment-user img {
@@ -19,4 +19,16 @@
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+.comment-avatar {
+    display: flex;
+    align-items: center;
+}
+
+.delete-comment {
+    color: var(--secondary-color);
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
 }

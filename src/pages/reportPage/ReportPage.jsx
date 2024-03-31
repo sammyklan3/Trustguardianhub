@@ -15,26 +15,16 @@ export const ReportPage = () => {
     const { token, user } = useContext(AuthContext);
     const [report, setReport] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [commetLoading, setCommentLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+
+    console.log(report);
 
     // Storing form data
     const [formData, setFormData] = useState({
         comment: "",
         userId: ""
     });
-
-    const [touchStartY, setTouchStartY] = useState(null);
-
-    const handleTouchStart = (e) => {
-        setTouchStartY(e.touches[0].clientY);
-    };
-
-    const handleTouchMove = (e) => {
-        const touchY = e.touches[0].clientY;
-        if (touchStartY && touchY > touchStartY) {
-            setIsOpen(false);
-        }
-    };
 
     const commentsToggle = () => {
         setIsOpen((prevState) => !prevState);
@@ -59,7 +49,7 @@ export const ReportPage = () => {
         }
 
         fetchReport();
-    }, [id, token])
+    }, [ id, token])
 
     useEffect(() => {
         // Update userId in formData when user context changes
@@ -92,12 +82,16 @@ export const ReportPage = () => {
         e.preventDefault();
 
         try {
+            setCommentLoading(true);
+
             const response = await axiosInstance.post(`/comments/${id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (response.status === 200) {
+            if (response.status === 201) {
+
+                console.log(response.data.data);
 
                 setReport({
                     ...report,
@@ -106,9 +100,21 @@ export const ReportPage = () => {
             }
         } catch (err) {
             console.error(err);
+        } finally {
+            setCommentLoading(false);
+            setFormData({ comment: "" });
         }
     }
 
+    const handleDeleteComment = (commentId) => {
+        // Filter out the deleted comment from report.comments
+        const updatedComments = report.comments.filter(comment => comment.comment_id !== commentId);
+        // Update the state to reflect the changes
+        setReport(prevReport => ({
+            ...prevReport,
+            comments: updatedComments
+        }));
+    };
 
     return (
         <div className="report-page-container">
@@ -146,16 +152,27 @@ export const ReportPage = () => {
                         {isOpen ? (
                             <>
                                 <div className="comments-overlay" onClick={commentsToggle}></div>
-                                <div className={"comment-container " + (isOpen ? 'open slide-in' : '')} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
-                                    <ul className="comment-section">
-                                        {commentsArray.length > 0 ? (
-                                            commentsArray.map((comment) => (
-                                                <CommentSection key={comment.comment_id} comment={comment} />
-                                            ))
-                                        ) : (
-                                            <p className="empty-comments">No comments</p>
-                                        )}
-                                    </ul>
+                                <div className={"comment-container " + (isOpen ? 'open slide-in' : '')}>
+                                    <div className="bar"></div>
+                                    <div className="comment-list">
+                                        <ul className="comment-section">
+                                            {commentsArray.length > 0 ? (
+                                                commentsArray
+                                                    // Sort comments by timestamp (assuming each comment has a 'timestamp' property)
+                                                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                                                    .map((comment) => (
+                                                        <CommentSection
+                                                            key={comment.comment_id}
+                                                            comment={comment}
+                                                            onDelete={handleDeleteComment}
+                                                        />
+                                                    ))
+                                            ) : (
+                                                <p className="empty-comments">No comments</p>
+                                            )}
+                                        </ul>
+                                    </div>
+
                                     <div className="form-container">
                                         <div className="comment-form">
                                             <form onSubmit={handleSubmit}>
@@ -167,7 +184,11 @@ export const ReportPage = () => {
                                                     onChange={handleChange}
                                                     required
                                                 />
-                                                {loading ? <button type="submit" disabled>Sending</button> : <button type="submit"><FaPaperPlane /></button>}
+                                                <button type="submit" disabled={commetLoading}>
+                                                    {commetLoading ? "Sending..." : (
+                                                        <FaPaperPlane />
+                                                    )}
+                                                </button>
 
                                             </form>
                                         </div>
