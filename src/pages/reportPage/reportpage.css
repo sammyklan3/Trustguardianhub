@@ -20,30 +20,146 @@
 .comment-section {
     display: flex;
     flex-direction: column;
-    gap: 1rem;  
+    gap: 1rem;
 }
 
+.comment-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background-color: white;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    padding: 10px;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.5); /* Add box shadow */
+    z-index: 999; /* Lower z-index compared to .comments-overlay */
+}
+
+.comments-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.report-page-users {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    align-items: center;
+}
+
+.report-page-users div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.report-page-users p {
+    align-items: center;
+}
+
+.comment-container.open {
+    transform: translateY(0);
+  }
+
+.comment-section {
+    overflow-y: auto;
+    /* Add scrollbar if necessary */
+}
+
+.form-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment-form form {
+    padding: 1rem;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid var(--light-gray);
+    display: flex;
+    gap: 1rem;
+}
+
+.empty-comments {
+    margin: auto;
+}
+
+.comment-form input {
+    border: none;
+    width: max-content;
+    width: 22rem;
+    outline: none;
+}
+
+.add-comment {
+    background-color: var(--light-gray);
+    width: max-content;
+    padding: 7px;
+    border-radius: 20px;
+}
+
+.comment-form button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+
+
 @media only screen and (min-width: 200px) and (max-width: 768px) {
-     .report-page-image img {
+    .report-page-image img {
         width: 100%;
         height: 100%;
         border-radius: 10px;
-     }
+    }
 
-     .report-page-header {
+    .report-page-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         border: 1px solid var(--light-gray);
         padding: 5px;
         border-radius: 10px;
-     }
+    }
 
-     .report-page-header img {
+    .report-page-header img {
         width: 35px;
         height: 35px;
         border-radius: 50%;
         object-fit: cover;
-     }
-    
+    }
+
 }

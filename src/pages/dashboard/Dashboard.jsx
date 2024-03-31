@@ -22,8 +22,6 @@ export const Dashboard = () => {
   const [toastType, setToastType] = useState("");
   const navigate = useNavigate();
 
-  console.log(reports);
-
   useEffect(() => {
     document.title = "TrustGuardianHub";
 

@@ -69,7 +69,19 @@ export const Navbar = () => {
                 </p>
                 <nav>
                   <NavLink to="/notifications">Notifications</NavLink>
-                  <NavLink to="/profile"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D" alt={user.username} className="profile-image" /></NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                  </NavLink>
                 </nav>
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
@@ -85,8 +97,16 @@ export const Navbar = () => {
 
               <NavLink to="/profile">
                 <img
-                  src={user ? user.profile_url : "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"}
-                  alt={user ? user.username : "default username"}
+                  src={
+                    user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                      user?.profile_url === ""
+                      ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                      : user?.profile_url
+                  }
+                  alt=
+                  {
+                    user ? user.username : "default username"
+                  }
                   className="profile-image"
                 />
 
@@ -173,31 +193,31 @@ export const Navbar = () => {
           </>
         );
 
-        case `/report/${id}`:
-          return (
-            <>
-              <header>
-                <div className="container">
-                  <p className="logo">
-                    <NavLink to="/dashboard">TrustGuardianHub</NavLink>
-                  </p>
-                  <nav>
-                    <NavLink to="/dashboard/settings">Settings</NavLink>
-                  </nav>
-                  <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
-                    <div className="bar"></div>
-                  </button>
-                </div>
-              </header>
-              <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
-                <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
-                  Close
+      case `/report/${id}`:
+        return (
+          <>
+            <header>
+              <div className="container">
+                <p className="logo">
+                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                </p>
+                <nav>
+                  <NavLink to="/dashboard/settings">Settings</NavLink>
+                </nav>
+                <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                  <div className="bar"></div>
                 </button>
-                <NavLink to="/dashboard/settings">Settings</NavLink>
-                <NavLink to="/dashboard/notifications">Notifications</NavLink>
-              </nav>
-            </>
-          );
+              </div>
+            </header>
+            <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+              <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                Close
+              </button>
+              <NavLink to="/dashboard/settings">Settings</NavLink>
+              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+            </nav>
+          </>
+        );
 
       default:
         return null;
