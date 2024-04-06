@@ -1,0 +1,78 @@
+.payment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 90vh;
+}
+
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+}
+
+.payment-form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1em;
+}
+
+.payment-form input {
+    font-family: "Poppins", sans-serif;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.payment-form span {
+    color: var(--green-color);
+}
+
+.error-border {
+    border: 1px solid red;
+}
+
+.loading-bar{
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid green; /* Green */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: auto;
+    margin-top: 20%;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.cancelBtn {
+    background-color: var(--secondary-color)
+}
+
+.submitBtn {
+    background-color: var(--green-color);
+}
+
+.payment-form button {
+    padding: 10px 20px;
+    border: none;
+    width: 100%;
+    border-radius: 19px;
+    color: white;
+    cursor: pointer;
+}
+
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+    .payment-container {
+        height: 80vh;
+    }
+}

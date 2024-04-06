@@ -8,6 +8,7 @@
   --red-color: #ff0000; /* Red */
   --accent-color: #FFBE0B; /* Yellow */
   --deep-blue: #8338EC;
+  --green-color: #0ac40a;
   --light-blue: #3A86FF;
   --light-gray: #c5c4c4;
   --secondary-color: #888383; /* Gray */
@@ -20,6 +21,16 @@
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+}
+
+button {
+  font-family: "Poppins", sans-serif;
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  font-family: "Poppins", sans-serif;
 }
 
 @media only screen and (min-width: 200px) and (max-width: 768px){
