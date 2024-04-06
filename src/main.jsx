@@ -18,6 +18,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { AdminDashboard } from './pages/admin/dashboard/AdminDashboard';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/admin",
+    element: <AdminDashboard />
   },
   {
     path: "/logout",

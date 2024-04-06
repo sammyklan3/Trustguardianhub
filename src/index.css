@@ -9,7 +9,7 @@
   --accent-color: #FFBE0B; /* Yellow */
   --deep-blue: #8338EC;
   --light-blue: #3A86FF;
-  --light-gray: #e7e4e4;
+  --light-gray: #c5c4c4;
   --secondary-color: #888383; /* Gray */
   --antique: rgb(247, 233, 217);
   --hover-color: #ebecee;
@@ -19,6 +19,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 @media only screen and (min-width: 200px) and (max-width: 768px){
