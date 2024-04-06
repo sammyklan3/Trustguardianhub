@@ -18,8 +18,6 @@ export const ReportPage = () => {
     const [commetLoading, setCommentLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
-    console.log(report);
-
     // Storing form data
     const [formData, setFormData] = useState({
         comment: "",
@@ -49,7 +47,7 @@ export const ReportPage = () => {
         }
 
         fetchReport();
-    }, [ id, token])
+    }, [id, token])
 
     useEffect(() => {
         // Update userId in formData when user context changes
@@ -115,6 +113,12 @@ export const ReportPage = () => {
             comments: updatedComments
         }));
     };
+
+    if (loading) {
+        return <Loader />
+    } else if (commetLoading) {
+        return <Loader />
+    }
 
     return (
         <div className="report-page-container">

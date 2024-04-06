@@ -111,11 +111,14 @@
   /* Initially hide the mobile nav off-screen */
   width: 100%;
   min-height: 100vh;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   z-index: 98;
   background-color: white;
   opacity: 1;
   padding-top: 120px;
+  padding-bottom: 5em;
   transition: left 0.3s ease;
   /* Add transition for smooth animation */
 }
@@ -125,17 +128,65 @@
   /* Slide in the mobile nav when is-active class is applied */
 }
 
-.mobile-nav a {
-  display: block;
-  width: 100%;
-  max-width: 200px;
-  margin: 0 auto 16px;
-  text-align: center;
-  margin-bottom: 16px;
-  padding: 12px 6px;
+.settings-toggle {
+  cursor: pointer;
+}
+
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  position: fixed;
+  bottom: 3em;
+  right: 3em;
   border-radius: 10px;
-  color: black;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Box shadow */
+}
+
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99; /* Lower z-index than settings options */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  /* Add transition for smooth animation */
+}
+
+.nav-footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 1em;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.mobile-nav a {
+  padding: 10px 20px;
   text-decoration: none;
+  color: black;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .mobile-nav a:hover {

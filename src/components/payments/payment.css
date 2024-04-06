@@ -32,26 +32,11 @@
 .payment-form span {
     color: var(--green-color);
 }
-
+  
 .error-border {
-    border: 1px solid red;
+    border: none;
+    outline: 1px solid red;
 }
-
-.loading-bar{
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid green; /* Green */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: auto;
-    margin-top: 20%;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
 
 .cancelBtn {
     background-color: var(--secondary-color)

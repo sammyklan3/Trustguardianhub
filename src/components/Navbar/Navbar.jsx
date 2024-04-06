@@ -2,17 +2,23 @@ import { useState, useContext } from 'react';
 import "./navbar.css";
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
+import { FaGear } from "react-icons/fa6";
 
 
 export const Navbar = () => {
   const location = useLocation();
   const { id } = useParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prevState => !prevState);
+  };
+
+  const toggleSettings = () => {
+    setSettingsOpen(prevState => !prevState);
   };
 
   const logoutBtn = () => {
@@ -63,10 +69,13 @@ export const Navbar = () => {
         return (
           <>
             <header>
+              {/* Logo section */}
               <div className="container">
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
+
+                {/* Nav links */}
                 <nav>
                   <NavLink to="/notifications">Notifications</NavLink>
                   <NavLink to="/profile">
@@ -83,34 +92,55 @@ export const Navbar = () => {
                       className="profile-image" />
                   </NavLink>
                 </nav>
+
+                {/* Hamburger */}
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
                 </button>
               </div>
             </header>
+
+            {/* Navbar for mobile */}
             <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
               <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
                 Close
               </button>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
 
-              <NavLink to="#" onClick={logoutBtn}>Logout</NavLink>
-
-              <NavLink to="/profile">
-                <img
-                  src={
-                    user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                      user?.profile_url === ""
-                      ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                      : user?.profile_url
-                  }
-                  alt=
-                  {
-                    user ? user.username : "default username"
-                  }
-                  className="profile-image"
-                />
-
-              </NavLink>
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                    <p>{user.username}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
+                      </div>
+                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
             </nav>
           </>
         );
@@ -119,24 +149,78 @@ export const Navbar = () => {
         return (
           <>
             <header>
+              {/* Logo section */}
               <div className="container">
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
+
+                {/* Nav links */}
                 <nav>
-                  <NavLink to="/dashboard/settings">Settings</NavLink>
+                  <NavLink to="/notifications">Notifications</NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                  </NavLink>
                 </nav>
+
+                {/* Hamburger */}
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
                 </button>
               </div>
             </header>
+
+            {/* Navbar for mobile */}
             <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
               <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
                 Close
               </button>
-              <NavLink to="/dashboard/settings">Settings</NavLink>
-              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                    <p>{user.username}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <hr />
+                        <NavLink to="/logout">Logout</NavLink>
+                      </div>
+                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
             </nav>
           </>
         );
@@ -145,24 +229,78 @@ export const Navbar = () => {
         return (
           <>
             <header>
+              {/* Logo section */}
               <div className="container">
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
+
+                {/* Nav links */}
                 <nav>
-                  <NavLink to="/dashboard/settings">Settings</NavLink>
+                  <NavLink to="/notifications">Notifications</NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                  </NavLink>
                 </nav>
+
+                {/* Hamburger */}
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
                 </button>
               </div>
             </header>
+
+            {/* Navbar for mobile */}
             <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
               <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
                 Close
               </button>
-              <NavLink to="/dashboard/settings">Settings</NavLink>
-              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                    <p>{user.username}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <hr />
+                        <NavLink to="/logout">Logout</NavLink>
+                      </div>
+                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
             </nav>
           </>
         );
@@ -171,24 +309,78 @@ export const Navbar = () => {
         return (
           <>
             <header>
+              {/* Logo section */}
               <div className="container">
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
+
+                {/* Nav links */}
                 <nav>
-                  <NavLink to="/dashboard/settings">Settings</NavLink>
+                  <NavLink to="/notifications">Notifications</NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                  </NavLink>
                 </nav>
+
+                {/* Hamburger */}
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
                 </button>
               </div>
             </header>
+
+            {/* Navbar for mobile */}
             <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
               <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
                 Close
               </button>
-              <NavLink to="/dashboard/settings">Settings</NavLink>
-              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                    <p>{user.username}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <hr />
+                        <NavLink to="/logout">Logout</NavLink>
+                      </div>
+                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
             </nav>
           </>
         );
@@ -197,79 +389,241 @@ export const Navbar = () => {
         return (
           <>
             <header>
+              {/* Logo section */}
               <div className="container">
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
+
+                {/* Nav links */}
                 <nav>
-                  <NavLink to="/dashboard/settings">Settings</NavLink>
+                  <NavLink to="/notifications">Notifications</NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                  </NavLink>
                 </nav>
+
+                {/* Hamburger */}
                 <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
                   <div className="bar"></div>
                 </button>
               </div>
             </header>
+
+            {/* Navbar for mobile */}
             <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
               <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
                 Close
               </button>
-              <NavLink to="/dashboard/settings">Settings</NavLink>
-              <NavLink to="/dashboard/notifications">Notifications</NavLink>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                    <p>{user.username}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <hr />
+                        <NavLink to="/logout">Logout</NavLink>
+                      </div>
+                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
             </nav>
           </>
         );
 
-        case "/admin":
-          return (
-            <>
-              <header>
-                <div className="container">
-                  <p className="logo">
-                    <NavLink to="/dashboard">TrustGuardianHub</NavLink>
-                  </p>
-                  <nav>
-                    <NavLink to="/dashboard/settings">Settings</NavLink>
-                  </nav>
-                  <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
-                    <div className="bar"></div>
-                  </button>
-                </div>
-              </header>
-              <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
-                <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
-                  Close
-                </button>
-                <NavLink to="/dashboard/settings">Settings</NavLink>
-                <NavLink to="/dashboard/notifications">Notifications</NavLink>
-              </nav>
-            </>
-          );
+      case "/admin":
+        return (
+          <>
+            <header>
+              {/* Logo section */}
+              <div className="container">
+                <p className="logo">
+                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                </p>
 
-          case "/upgrade":
-          return (
-            <>
-              <header>
-                <div className="container">
-                  <p className="logo">
-                    <NavLink to="/dashboard">TrustGuardianHub</NavLink>
-                  </p>
-                  <nav>
-                    <NavLink to="/dashboard/settings">Settings</NavLink>
-                  </nav>
-                  <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
-                    <div className="bar"></div>
-                  </button>
-                </div>
-              </header>
-              <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
-                <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
-                  Close
+                {/* Nav links */}
+                <nav>
+                  <NavLink to="/notifications">Notifications</NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                  </NavLink>
+                </nav>
+
+                {/* Hamburger */}
+                <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                  <div className="bar"></div>
                 </button>
-                <NavLink to="/dashboard/settings">Settings</NavLink>
-                <NavLink to="/dashboard/notifications">Notifications</NavLink>
-              </nav>
-            </>
-          );
+              </div>
+            </header>
+
+            {/* Navbar for mobile */}
+            <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+              <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                Close
+              </button>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                    <p>{user.username}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <hr />
+                        <NavLink to="/logout">Logout</NavLink>
+                      </div>
+                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
+            </nav>
+          </>
+        );
+
+      case "/upgrade":
+        return (
+          <>
+            <header>
+              {/* Logo section */}
+              <div className="container">
+                <p className="logo">
+                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                </p>
+
+                {/* Nav links */}
+                <nav>
+                  <NavLink to="/notifications">Notifications</NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                  </NavLink>
+                </nav>
+
+                {/* Hamburger */}
+                <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                  <div className="bar"></div>
+                </button>
+              </div>
+            </header>
+
+            {/* Navbar for mobile */}
+            <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+              <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                Close
+              </button>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
+                          user?.profile_url === ""
+                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                          : user?.profile_url
+                      }
+                      alt={
+                        user.username
+                      }
+                      className="profile-image" />
+                    <p>{user.username}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <hr />
+                        <NavLink to="/logout">Logout</NavLink>
+                      </div>
+                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
+            </nav>
+          </>
+        );
 
       default:
         return null;

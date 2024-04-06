@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import Proptype from 'prop-types';
+import { FaShieldHalved } from "react-icons/fa6";
+import { Toast } from '../toast/Toast';
 import "./payment.css";
 
 export const Payment = ({ amount, defaultPhone, onSubmit, loading, setShowPayment }) => {
     const [phone, setPhone] = useState(defaultPhone);
     const [phoneError, setPhoneError] = useState(null);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState(null);
+    const [toastType, setToastType] = useState("");
 
     const handlePhoneChange = (event) => {
         const value = event.target.value;
@@ -20,6 +25,10 @@ export const Payment = ({ amount, defaultPhone, onSubmit, loading, setShowPaymen
         event.preventDefault();
         if (!phoneError) {
             onSubmit({ amount, phone });
+        } else {
+            setShowToast(true);
+            setToastType("error");
+            setToastMessage(phoneError);
         }
     };
 
@@ -49,13 +58,17 @@ export const Payment = ({ amount, defaultPhone, onSubmit, loading, setShowPaymen
                         placeholder="Enter phone number"
                         className={phoneError ? "error-border" : null}
                     />
-                    {phoneError && <p className="error">{phoneError}</p>}
+                    {/* {phoneError && <p className="error">{phoneError}</p>} */}
                 </div>
-                {loading ? <div className="loading-bar"></div> : (
-                    <>
-                        <button type="submit" className="submitBtn">Submit</button>
-                        <button type="button" className="cancelBtn" onClick={() => setShowPayment(false)}>Cancel</button>
-                    </>
+                <button type="submit" className="submitBtn" disabled={loading}>{loading ? "Loading.." : "Send"}</button>
+                <button type="button" className="cancelBtn" onClick={() => setShowPayment(false)}>Cancel</button>
+                {showToast && (
+                    <Toast
+                        message={toastMessage}
+                        duration={3000}
+                        type={toastType}
+                        onClose={() => setShowToast(false)}
+                    />
                 )}
             </form>
         </div>
