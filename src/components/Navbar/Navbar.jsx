@@ -21,10 +21,6 @@ export const Navbar = () => {
     setSettingsOpen(prevState => !prevState);
   };
 
-  const logoutBtn = () => {
-    navigate("/logout");
-  }
-
   const handleTouchStart = (e) => {
     touchStartX = e.touches[0].clientX;
   };
@@ -47,6 +43,7 @@ export const Navbar = () => {
   let touchStartX = null;
 
   const renderNavbarItems = () => {
+
     switch (location.pathname) {
       case "/":
         return (
@@ -78,6 +75,9 @@ export const Navbar = () => {
                 {/* Nav links */}
                 <nav>
                   <NavLink to="/notifications">Notifications</NavLink>
+                  <NavLink to="/create-report">Create a report</NavLink>
+                  <NavLink to="/edit-report">My reports</NavLink>
+                  <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                   <NavLink to="/profile">
                     <img
                       src={
@@ -87,7 +87,7 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
                   </NavLink>
@@ -123,10 +123,10 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
-                    <p>{user.username}</p>
+                    <p>{user ? user.username : "Guest"}</p>
                   </div>
                   {settingsOpen ? (
                     <>
@@ -135,7 +135,7 @@ export const Navbar = () => {
                         <NavLink to="/logout">Logout</NavLink>
                         <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
-                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
                     </>
                   ) : null}
                   <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
@@ -145,6 +145,7 @@ export const Navbar = () => {
           </>
         );
 
+      // Link to create a report page
       case "/create-report":
         return (
           <>
@@ -167,7 +168,7 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
                   </NavLink>
@@ -203,19 +204,20 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
-                    <p>{user.username}</p>
+                    <p>{user ? user.username : "Guest"}</p>
                   </div>
                   {settingsOpen ? (
                     <>
                       <div className="settings-options">
-                        <NavLink to="/profile">Profile</NavLink>
-                        <hr />
-                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/notifications">Notifications</NavLink>
+                        <NavLink to="/create-report">Create a report</NavLink>
+                        <NavLink to="/edit-report">My reports</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
-                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
                     </>
                   ) : null}
                   <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
@@ -225,6 +227,7 @@ export const Navbar = () => {
           </>
         );
 
+      // Link to account page
       case "/profile":
         return (
           <>
@@ -247,7 +250,7 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
                   </NavLink>
@@ -283,19 +286,20 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
-                    <p>{user.username}</p>
+                    <p>{user ? user.username : "Guest"}</p>
                   </div>
                   {settingsOpen ? (
                     <>
                       <div className="settings-options">
-                        <NavLink to="/profile">Profile</NavLink>
-                        <hr />
-                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/notifications">Notifications</NavLink>
+                        <NavLink to="/create-report">Create a report</NavLink>
+                        <NavLink to="/edit-report">My reports</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
-                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
                     </>
                   ) : null}
                   <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
@@ -305,6 +309,7 @@ export const Navbar = () => {
           </>
         );
 
+      // update report navbar
       case `/update-report/${id}`:
         return (
           <>
@@ -327,7 +332,7 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
                   </NavLink>
@@ -363,19 +368,20 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
-                    <p>{user.username}</p>
+                    <p>{user ? user.username : "Guest"}</p>
                   </div>
                   {settingsOpen ? (
                     <>
                       <div className="settings-options">
-                        <NavLink to="/profile">Profile</NavLink>
-                        <hr />
-                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/notifications">Notifications</NavLink>
+                        <NavLink to="/create-report">Create a report</NavLink>
+                        <NavLink to="/edit-report">My reports</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
-                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
                     </>
                   ) : null}
                   <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
@@ -385,6 +391,7 @@ export const Navbar = () => {
           </>
         );
 
+      // single report page navbar
       case `/report/${id}`:
         return (
           <>
@@ -407,7 +414,7 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
                   </NavLink>
@@ -443,19 +450,20 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
-                    <p>{user.username}</p>
+                    <p>{user ? user.username : "Guest"}</p>
                   </div>
                   {settingsOpen ? (
                     <>
                       <div className="settings-options">
-                        <NavLink to="/profile">Profile</NavLink>
-                        <hr />
-                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/notifications">Notifications</NavLink>
+                        <NavLink to="/create-report">Create a report</NavLink>
+                        <NavLink to="/edit-report">My reports</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
-                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
                     </>
                   ) : null}
                   <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
@@ -465,6 +473,7 @@ export const Navbar = () => {
           </>
         );
 
+      // Admin page navbar
       case "/admin":
         return (
           <>
@@ -472,7 +481,7 @@ export const Navbar = () => {
               {/* Logo section */}
               <div className="container">
                 <p className="logo">
-                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                  <NavLink to="/admin">TrustGuardianHub</NavLink>
                 </p>
 
                 {/* Nav links */}
@@ -487,7 +496,7 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
                   </NavLink>
@@ -506,9 +515,9 @@ export const Navbar = () => {
                 Close
               </button>
               <div className="nav-links">
-                <NavLink to="/notifications">Notifications</NavLink>
-                <NavLink to="/create-report">Create a report</NavLink>
-                <NavLink to="/edit-report">My reports</NavLink>
+                <NavLink to="/notifications">Manage Users</NavLink>
+                <NavLink to="/create-report">Reports</NavLink>
+                <NavLink to="/edit-report">Analytics</NavLink>
               </div>
 
               <div className="nav-footer">
@@ -523,19 +532,20 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
-                    <p>{user.username}</p>
+                    <p>{user ? user.username : "Guest"}</p>
                   </div>
                   {settingsOpen ? (
                     <>
                       <div className="settings-options">
-                        <NavLink to="/profile">Profile</NavLink>
-                        <hr />
-                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/notifications">Notifications</NavLink>
+                        <NavLink to="/create-report">Create a report</NavLink>
+                        <NavLink to="/edit-report">My reports</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
-                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
                     </>
                   ) : null}
                   <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
@@ -545,6 +555,7 @@ export const Navbar = () => {
           </>
         );
 
+      // Upgrade page navbar
       case "/upgrade":
         return (
           <>
@@ -567,7 +578,7 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
                   </NavLink>
@@ -603,19 +614,20 @@ export const Navbar = () => {
                           : user?.profile_url
                       }
                       alt={
-                        user.username
+                        user ? user.username : "user"
                       }
                       className="profile-image" />
-                    <p>{user.username}</p>
+                    <p>{user ? user.username : "Guest"}</p>
                   </div>
                   {settingsOpen ? (
                     <>
                       <div className="settings-options">
-                        <NavLink to="/profile">Profile</NavLink>
-                        <hr />
-                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/notifications">Notifications</NavLink>
+                        <NavLink to="/create-report">Create a report</NavLink>
+                        <NavLink to="/edit-report">My reports</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
-                    <div className="settings-overlay" onClick={toggleSettings}></div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
                     </>
                   ) : null}
                   <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>

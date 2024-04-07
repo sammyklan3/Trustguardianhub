@@ -1,15 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Proptype from 'prop-types';
 import { FaShieldHalved } from "react-icons/fa6";
 import { Toast } from '../toast/Toast';
 import "./payment.css";
 
-export const Payment = ({ amount, defaultPhone, onSubmit, loading, setShowPayment }) => {
+export const Payment = ({ amount, defaultPhone, onSubmit, loading, setShowPayment, paymentPurpose, user }) => {
     const [phone, setPhone] = useState(defaultPhone);
     const [phoneError, setPhoneError] = useState(null);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState(null);
     const [toastType, setToastType] = useState("");
+
+    const [formData, setFormData] = useState({
+        userId: null,
+        amount: 0,
+        phone: phone,
+        paymentPurpose: ""
+    });
+
+    useEffect(() => {
+        // Update userId in formData when user context changes
+        setFormData(prevState => ({
+            ...prevState,
+            userId: user ? user.user_id : null,
+            amount: amount,
+            paymentPurpose: paymentPurpose,
+        }));
+
+    }, [user]);
 
     const handlePhoneChange = (event) => {
         const value = event.target.value;
@@ -24,7 +42,7 @@ export const Payment = ({ amount, defaultPhone, onSubmit, loading, setShowPaymen
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!phoneError) {
-            onSubmit({ amount, phone });
+            onSubmit({ formData });
         } else {
             setShowToast(true);
             setToastType("error");
@@ -60,7 +78,7 @@ export const Payment = ({ amount, defaultPhone, onSubmit, loading, setShowPaymen
                     />
                     {/* {phoneError && <p className="error">{phoneError}</p>} */}
                 </div>
-                <button type="submit" className="submitBtn" disabled={loading}>{loading ? "Loading.." : "Send"}</button>
+                <button type="submit" className="submitBtn" disabled={loading}>{loading ? "Loading..." : "Send"}</button>
                 <button type="button" className="cancelBtn" onClick={() => setShowPayment(false)}>Cancel</button>
                 {showToast && (
                     <Toast
@@ -80,5 +98,7 @@ Payment.propTypes = {
     defaultPhone: Proptype.string.isRequired,
     onSubmit: Proptype.func.isRequired,
     loading: Proptype.bool.isRequired,
-    setShowPayment: Proptype.bool.isRequired,
+    setShowPayment: Proptype.func.isRequired,
+    paymentPurpose: Proptype.string.isRequired,
+    user: Proptype.object.isRequired,
 };

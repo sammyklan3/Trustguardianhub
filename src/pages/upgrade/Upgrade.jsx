@@ -4,15 +4,19 @@ import { axiosInstance } from "../../api/axiosInstance";
 import { AuthContext } from '../../context/authContext';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { Toast } from '../../components/toast/Toast';
+import { PaymentLoading } from '../../components/paymentLoading/PaymentLoading';
 import "./upgrade.css";
 
 export const Upgrade = () => {
     const [showpayment, setShowPayment] = useState(false);
+    const [showpaymentLoading, setShowPaymentLoading] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState("");
+    const [paymentId, setPaymentId] = useState(null); // State to hold the payment ID
     const [currentTier, setCurrentTier] = useState("free"); // State to hold the current user's tier
+
 
     const { token, user } = useContext(AuthContext);
 
@@ -32,28 +36,32 @@ export const Upgrade = () => {
         // });
     }, []);
 
-    const submitPayment = async ({ amount, phone }) => {
+    const submitPayment = async ({ formData }) => {
         try {
             setLoading(true);
-            const res = await axiosInstance.post("/stkPush", {
-                amount,
-                phone
-            }, {
+            const res = await axiosInstance.post("/stkPush", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
 
             if (res.status === 200) {
-                setShowToast(true);
-                setToastType("success");
-                setToastMessage("Payment request sent successfully");
+                if (res.data.mpesaRes.ResponseCode == 0) {
+                    setShowPayment(false);
+                    setShowPaymentLoading(true);
+                    setPaymentId(res.data.payment_id);
+                } else {
+                    setShowToast(true);
+                    setToastType("success");
+                    setToastMessage("Payment request sent successfully");
+                }
             }
             setLoading(false);
         } catch (err) {
             setShowToast(true);
+            console.log(err);
             setToastType("error");
-            setToastMessage(err.response ? err.response.data.error : "An error occurred while sending payment request");
+            setToastMessage(err ? err.response.data.error : "An error occurred while sending payment request");
         } finally {
             setLoading(false);
         }
@@ -64,68 +72,74 @@ export const Upgrade = () => {
             <Navbar />
 
             {showpayment ? (
-                <Payment amount={showpayment.amount} defaultPhone="254712865645" onSubmit={submitPayment} loading={loading} setShowPayment={setShowPayment} />
-            ) :
-                <div className="upgrade-content">
-                    <h2>Upgrade Your Account</h2>
-                    <p>Choose the package that best fits your needs:</p>
-                    {currentTier === "free" && (
-                        <div className="package">
-                            <h3>Free Package</h3>
-                            <p>Free features:</p>
-                            <ul>
-                                <li>Report up to 5 scammers per month</li>
-                                <li>Access to community forums</li>
-                            </ul>
-                            <p>Price: Free</p>
+                <Payment amount={showpayment.amount} defaultPhone="254712865645" onSubmit={submitPayment} loading={loading} setShowPayment={setShowPayment} paymentPurpose={showpayment.paymentPurpose} user={user} />
+            ) : (
+                <>
+                    {showpaymentLoading ? (
+                        <PaymentLoading paymentId={paymentId} setShowPaymentLoading={setShowPaymentLoading}/>
+                    ) : (
+                        <div className="upgrade-content">
+                            <h2>Upgrade Your Account</h2>
+                            <p>Choose the package that best fits your needs:</p>
+                            {currentTier === "free" && (
+                                <div className="package">
+                                    <h3>Free Package</h3>
+                                    <p>Free features:</p>
+                                    <ul>
+                                        <li>Report up to 5 scammers per month</li>
+                                        <li>Access to community forums</li>
+                                    </ul>
+                                    <p>Price: Free</p>
+                                </div>
+                            )}
+                            {currentTier !== "free" && (
+                                <div className="current-package">
+                                    <h3>Current Package: {currentTier}</h3>
+                                    {/* Display current package details here */}
+                                </div>
+                            )}
+                            {currentTier === "free" && (
+                                <div className="package">
+                                    <h3>Basic Package</h3>
+                                    <p>Unlock basic features:</p>
+                                    <ul>
+                                        <li>Report up to 5 scammers per month</li>
+                                        <li>Access to community forums</li>
+                                    </ul>
+                                    <p>Price: KES 100/month</p>
+                                    <button type="button" onClick={() => setShowPayment({ amount: 100, paymentPurpose: "basic_tier_package" })}>Upgrade to Basic</button>
+                                </div>
+                            )}
+                            {currentTier !== "basic" && (
+                                <div className="package">
+                                    <h3>Standard Package</h3>
+                                    <p>Unlock standard features:</p>
+                                    <ul>
+                                        <li>Report up to 15 scammers per month</li>
+                                        <li>Access to premium support</li>
+                                        <li>Priority listing in scam alerts</li>
+                                    </ul>
+                                    <p>Price: KES 250/month</p>
+                                    <button type="button" onClick={() => setShowPayment({ amount: 250, paymentPurpose: "standard_tier_package" })}>Upgrade to Standard</button>
+                                </div>
+                            )}
+                            {currentTier !== "standard" && (
+                                <div className="package">
+                                    <h3>Premium Package</h3>
+                                    <p>Unlock premium features:</p>
+                                    <ul>
+                                        <li>Unlimited scammer reports</li>
+                                        <li>Access to exclusive webinars and workshops</li>
+                                        <li>Personalized fraud prevention consultation</li>
+                                    </ul>
+                                    <p>Price: KES 500/month</p>
+                                    <button type="button" onClick={() => setShowPayment({ amount: 500, paymentPurpose: "premium_tier_package" })}>Buy Premium</button>
+                                </div>
+                            )}
                         </div>
                     )}
-                    {currentTier !== "free" && (
-                        <div className="current-package">
-                            <h3>Current Package: {currentTier}</h3>
-                            {/* Display current package details here */}
-                        </div>
-                    )}
-                    {currentTier === "free" && (
-                        <div className="package">
-                            <h3>Basic Package</h3>
-                            <p>Unlock basic features:</p>
-                            <ul>
-                                <li>Report up to 5 scammers per month</li>
-                                <li>Access to community forums</li>
-                            </ul>
-                            <p>Price: KES 100/month</p>
-                            <button type="button" onClick={() => setShowPayment({ amount: 100 })}>Upgrade to Basic</button>
-                        </div>
-                    )}
-                    {currentTier !== "basic" && (
-                        <div className="package">
-                            <h3>Standard Package</h3>
-                            <p>Unlock standard features:</p>
-                            <ul>
-                                <li>Report up to 15 scammers per month</li>
-                                <li>Access to premium support</li>
-                                <li>Priority listing in scam alerts</li>
-                            </ul>
-                            <p>Price: KES 250/month</p>
-                            <button type="button" onClick={() => setShowPayment({ amount: 250 })}>Upgrade to Standard</button>
-                        </div>
-                    )}
-                    {currentTier !== "standard" && (
-                        <div className="package">
-                            <h3>Premium Package</h3>
-                            <p>Unlock premium features:</p>
-                            <ul>
-                                <li>Unlimited scammer reports</li>
-                                <li>Access to exclusive webinars and workshops</li>
-                                <li>Personalized fraud prevention consultation</li>
-                            </ul>
-                            <p>Price: KES 500/month</p>
-                            <button type="button" onClick={() => setShowPayment({ amount: 500 })}>Buy Premium</button>
-                        </div>
-                    )}
-                </div>
-            }
+                </>
+            )}
             {showToast && (
                 <Toast
                     message={toastMessage}
@@ -136,4 +150,5 @@ export const Upgrade = () => {
             )}
         </div>
     )
+
 }
