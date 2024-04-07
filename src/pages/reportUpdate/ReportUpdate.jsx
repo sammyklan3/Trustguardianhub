@@ -10,7 +10,7 @@ import { Toast } from "../../components/toast/Toast";
 export const ReportUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { token } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
 
   const [report, setReport] = useState({ title: "", description: "", image: null, imageUrl: "" });
   const [error, setError] = useState("");
@@ -25,6 +25,10 @@ export const ReportUpdate = () => {
   console.log(isButtonEnabled);
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+    
     const getReport = async () => {
       setLoading(true);
       try {

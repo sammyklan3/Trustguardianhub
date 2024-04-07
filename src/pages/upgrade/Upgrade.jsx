@@ -6,8 +6,10 @@ import { Navbar } from '../../components/Navbar/Navbar';
 import { Toast } from '../../components/toast/Toast';
 import { PaymentLoading } from '../../components/paymentLoading/PaymentLoading';
 import "./upgrade.css";
+import { useNavigate } from 'react-router-dom';
 
 export const Upgrade = () => {
+    const navigate = useNavigate();
     const [showpayment, setShowPayment] = useState(false);
     const [showpaymentLoading, setShowPaymentLoading] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -15,12 +17,15 @@ export const Upgrade = () => {
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState("");
     const [paymentId, setPaymentId] = useState(null); // State to hold the payment ID
-    const [currentTier, setCurrentTier] = useState("free"); // State to hold the current user's tier
-
+    const [currentTier, setCurrentTier] = useState("free"); // State to hold the user's current package
 
     const { token, user } = useContext(AuthContext);
 
     useEffect(() => {
+        if (!user) {
+            navigate("/login");
+        }
+        
         // You may fetch the user's current package from the server and update the currentTier state
         // Example: 
         // axiosInstance.get("/user/package", {
@@ -34,6 +39,8 @@ export const Upgrade = () => {
         // .catch(error => {
         //     console.error("Error fetching user package:", error);
         // });
+
+        setCurrentTier(user ? user.tier : "FREE");
     }, []);
 
     const submitPayment = async ({ formData }) => {
@@ -72,7 +79,7 @@ export const Upgrade = () => {
             <Navbar />
 
             {showpayment ? (
-                <Payment amount={showpayment.amount} defaultPhone="254712865645" onSubmit={submitPayment} loading={loading} setShowPayment={setShowPayment} paymentPurpose={showpayment.paymentPurpose} user={user} />
+                <Payment amount={showpayment.amount} defaultPhone={user ? user.phone : ""} onSubmit={submitPayment} loading={loading} setShowPayment={setShowPayment} paymentPurpose={showpayment.paymentPurpose} user={user} />
             ) : (
                 <>
                     {showpaymentLoading ? (
@@ -81,7 +88,7 @@ export const Upgrade = () => {
                         <div className="upgrade-content">
                             <h2>Upgrade Your Account</h2>
                             <p>Choose the package that best fits your needs:</p>
-                            {currentTier === "free" && (
+                            {currentTier === "FREE" && (
                                 <div className="package">
                                     <h3>Free Package</h3>
                                     <p>Free features:</p>
@@ -92,13 +99,13 @@ export const Upgrade = () => {
                                     <p>Price: Free</p>
                                 </div>
                             )}
-                            {currentTier !== "free" && (
+                            {currentTier !== "FREE" && (
                                 <div className="current-package">
                                     <h3>Current Package: {currentTier}</h3>
                                     {/* Display current package details here */}
                                 </div>
                             )}
-                            {currentTier === "free" && (
+                            {currentTier === "FREE" && (
                                 <div className="package">
                                     <h3>Basic Package</h3>
                                     <p>Unlock basic features:</p>
@@ -110,7 +117,7 @@ export const Upgrade = () => {
                                     <button type="button" onClick={() => setShowPayment({ amount: 100, paymentPurpose: "basic_tier_package" })}>Upgrade to Basic</button>
                                 </div>
                             )}
-                            {currentTier !== "basic" && (
+                            {currentTier !== "basic_tier_package" && (
                                 <div className="package">
                                     <h3>Standard Package</h3>
                                     <p>Unlock standard features:</p>
@@ -123,7 +130,7 @@ export const Upgrade = () => {
                                     <button type="button" onClick={() => setShowPayment({ amount: 250, paymentPurpose: "standard_tier_package" })}>Upgrade to Standard</button>
                                 </div>
                             )}
-                            {currentTier !== "standard" && (
+                            {currentTier !== "standard_tier_package" && (
                                 <div className="package">
                                     <h3>Premium Package</h3>
                                     <p>Unlock premium features:</p>

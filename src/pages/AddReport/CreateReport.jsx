@@ -27,6 +27,9 @@ export const CreateReport = () => {
   });
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
     // Update userId in formData when user context changes
     setFormData(prevState => ({
       ...prevState,

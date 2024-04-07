@@ -16,6 +16,7 @@ export const Profile = () => {
     if (!user) {
       navigate("/login");
     }
+    
   }, [user, navigate]);
 
   const toggleDialog = () => {

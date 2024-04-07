@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import "./paymentLoading.css";
 import { axiosInstance } from '../../api/axiosInstance';
 import { AuthContext } from '../../context/authContext';
+import { HashLoader } from 'react-spinners';
 
 export const PaymentLoading = ({ paymentId, setShowPaymentLoading }) => {
     const [status, setStatus] = useState(null);
@@ -34,8 +35,8 @@ export const PaymentLoading = ({ paymentId, setShowPaymentLoading }) => {
         <div className="payment-loading-container">
             {status === "PENDING" ? (
                 <>
-                    <div className="payment-loader"></div>
-                    <h3>Payment is {status}</h3>
+                    <HashLoader color="#36d7b7" />
+                    <h3>Payment is <span>{status}</span></h3>
                 </>
             ) : status === "CONFIRMED" ? (
                 <div className="payment-success">
@@ -49,8 +50,12 @@ export const PaymentLoading = ({ paymentId, setShowPaymentLoading }) => {
                     <p>Sorry, your payment was not successful. Please try again.</p>
                     {/* {setShowPaymentLoading(false)} */}
                 </div>
-            ) :
-                <div className="payment-loader"></div>
+            ) : (
+                <>
+                    <HashLoader color="#36d7b7" />
+                    <h3>Please wait as we are retrieving details</h3>
+                </>
+            )
             }
         </div>
     )

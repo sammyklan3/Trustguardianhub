@@ -2,7 +2,7 @@ import "./reportpage.css";
 import { useEffect, useState, useContext } from "react";
 import { BsChat, BsHandThumbsUp, BsBookmark } from "react-icons/bs";
 import { FaPaperPlane } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Loader } from "../../components/loader/Loader";
 import { axiosInstance } from "../../api/axiosInstance";
@@ -11,8 +11,10 @@ import { CommentSection } from "../../components/comment-section/CommentSection"
 
 export const ReportPage = () => {
 
+    const navigate = useNavigate();
     const { id } = useParams();
     const { token, user } = useContext(AuthContext);
+    
     const [report, setReport] = useState([]);
     const [loading, setLoading] = useState(false);
     const [commetLoading, setCommentLoading] = useState(false);
@@ -29,6 +31,10 @@ export const ReportPage = () => {
     };
 
     useEffect(() => {
+        if (!user) {
+            navigate("/login");
+        }
+
         const fetchReport = async () => {
             setLoading(true);
             try {

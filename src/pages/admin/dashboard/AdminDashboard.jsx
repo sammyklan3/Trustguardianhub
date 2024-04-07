@@ -1,13 +1,14 @@
 import "./dashboard.css";
 import { useEffect, useState, useContext } from "react";
 import { axiosInstance } from "../../../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
 import { FaRegUser, FaNewspaper, FaPersonCircleCheck } from "react-icons/fa6";
 import { AuthContext } from "../../../context/authContext";
 import { Navbar } from "../../../components/Navbar/Navbar";
 import { Loader } from "../../../components/loader/Loader";
 
 export const AdminDashboard = () => {
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [reports, setReports] = useState([]);
   const [users, setUsers] = useState([]);
@@ -15,6 +16,9 @@ export const AdminDashboard = () => {
   const { user, token } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!user) {
+      navigate("/login");
+  }
     // const getReports = async () => {
     //   setLoading(true);
     //   try {
