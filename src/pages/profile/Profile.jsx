@@ -10,8 +10,6 @@ export const Profile = () => {
   const navigate = useNavigate();
   const [showDialog, setShowDialog] = useState(false);
 
-  console.log(user);
-
   useEffect(() => {
     if (!user) {
       navigate("/login");

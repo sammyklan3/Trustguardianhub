@@ -6,8 +6,6 @@ import { Toast } from "../../../components/toast/Toast";
 import { AuthContext } from "../../../context/authContext";
 
 export const Login = () => {
-
-  // Storing form data
   const [loginData, setLoginData] = useState({
     username: "",
     password: ""
@@ -23,21 +21,18 @@ export const Login = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/dashboard");
+      navigate(-1); // Redirect to the previous page or dashboard
     }
 
     document.title = "TrustGuardianHub | Login";
     
-  }, [token, navigate]);
+  }, [token]);
 
-  // Function for handling change in the form state
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setLoginData({ ...loginData, [name]: value });
   };
 
-  // Submutting form data
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,7 +46,7 @@ export const Login = () => {
         setShowToast(true);
         setToastType("success");
         setToastMessage(response.data.message);
-        navigate("/dashboard");
+        navigate("/dashboard"); // Redirect to the previous page or dashboard
       }
     } catch (err) {
       setShowToast(true);
@@ -63,7 +58,6 @@ export const Login = () => {
   };
 
   return (
-
     <div className="login-container">
       <div className="login-container-main">
         <div className="login-left">
@@ -73,10 +67,7 @@ export const Login = () => {
           <h2>Login</h2>
           <hr />
 
-          {/* Form input */}
           <form onSubmit={handleSubmit}>
-
-            {/* Username input */}
             <input
               type="text"
               name="username"
@@ -85,8 +76,6 @@ export const Login = () => {
               onChange={handleChange}
               required
             />
-
-            {/* Password input */}
             <input
               type="password"
               name="password"
@@ -95,7 +84,6 @@ export const Login = () => {
               placeholder="Password"
               required
             />
-
             <button type="submit" disabled={isLoading}>
               {isLoading ? <div className="loader"></div> : "Login"}
             </button>
@@ -116,8 +104,5 @@ export const Login = () => {
         </div>
       </div>
     </div>
-
-  )
-
+  );
 };
-
