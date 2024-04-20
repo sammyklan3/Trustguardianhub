@@ -1,8 +1,10 @@
 import { useState, useContext } from 'react';
 import "./navbar.css";
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { axiosInstance } from '../../api/axiosInstance';
+import { SearchBar } from '../searchBar/searchBar';
 import { AuthContext } from '../../context/authContext';
-import { FaGear, FaBell, FaPlus } from "react-icons/fa6";
+import { FaGear, FaBell, FaPlus, FaCircleXmark } from "react-icons/fa6";
 
 
 export const Navbar = () => {
@@ -10,8 +12,30 @@ export const Navbar = () => {
   const { id } = useParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, token } = useContext(AuthContext);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    try {
+      // const response = await axiosInstance.get(`/search/${query}`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`
+      //   }
+      // });
+
+      // Simulate API call to get search results
+      // Replace this with actual API call in real-world application
+      const results = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig'].filter(item =>
+        item.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+      setSearchResults(results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prevState => !prevState);
@@ -71,6 +95,32 @@ export const Navbar = () => {
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
+
+                {/* Search bar */}
+                <div className="search-section">
+                  <SearchBar onChange={handleSearch} />
+
+                  {searchQuery && searchQuery.length > 0 ? (
+                    searchResults.length > 0 ? (
+                      <ul>
+                        {searchResults.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <ul>No results found for &quot;{searchQuery}&quot;</ul>
+                    )
+                  ) : null}
+                  {/* {searchResults.length > 0 ? (
+                    <ul>
+                      {searchResults.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <ul>No results found</ul>
+                  )} */}
+                </div>
 
                 {/* Nav links */}
                 <nav>
