@@ -1,10 +1,10 @@
-import { ClimbingBoxLoader } from "react-spinners";
+import { HashLoader } from 'react-spinners';
 import "./loader.css";
 
 export const Loader = () => {
   return (
     <div className="loading-spinner-overlay">
-      <ClimbingBoxLoader color="black" />
+      <HashLoader color="#DB3B18" />
     </div>
   )
 }

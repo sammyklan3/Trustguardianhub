@@ -13,6 +13,7 @@
 .nav-links a {
   text-decoration: none;
   color: black;
+  align-items: center;
   font-size: 1.2rem;
   transition: 0.3s;
 }
@@ -91,8 +92,22 @@
 }
 
 .container nav a {
+  display: flex;
+  gap: 5px;
   text-decoration: none;
   color: black;
+  align-items: center;
+  padding: 0.5em;
+  border-radius: 20px;
+}
+
+.notification-icon {
+  font-size: 1.5em;
+  color:  gray;
+}
+
+.container nav a:hover {
+  background-color: var(--hover-color);
 }
 
 .profile-image {

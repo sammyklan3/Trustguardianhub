@@ -11,7 +11,7 @@ export const Login = () => {
     password: ""
   });
 
-  const { login, token } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -20,13 +20,9 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (token) {
-      navigate(-1); // Redirect to the previous page or dashboard
-    }
-
     document.title = "TrustGuardianHub | Login";
     
-  }, [token]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
