@@ -1,5 +1,5 @@
 .search-container {
-    padding: 1em 6%;
+    padding: 10px 6%;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -110,7 +110,7 @@
 
 @media only screen and (min-width: 200px) and (max-width: 768px){
     .search-container {
-        padding: 1em 5%;
+        padding: 10px 3%;
     }
 
     .search-bar-container {

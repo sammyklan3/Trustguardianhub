@@ -18,6 +18,21 @@
   transition: 0.3s;
 }
 
+.mobile-nav .nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.mobile-nav .nav-links a {
+  background-color: var(--light-gray);
+  min-width: 12em;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
 .logo a {
   text-decoration: none;
   background-image: linear-gradient(to right, var(--accent-color) 0%, var(--primary-color) 100%);
