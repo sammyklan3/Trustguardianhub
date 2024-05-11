@@ -3,7 +3,6 @@ import "./navbar.css";
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 import { FaGear, FaBell, FaPlus, FaPaperclip, FaUserGroup } from "react-icons/fa6";
-import { TbDeviceDesktopSearch } from "react-icons/tb";
 import { RiSearch2Line } from "react-icons/ri";
 import { GoGraph } from "react-icons/go";
 
