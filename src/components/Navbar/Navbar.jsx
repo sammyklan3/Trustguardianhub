@@ -1,8 +1,6 @@
 import { useState, useContext } from 'react';
 import "./navbar.css";
 import { NavLink, useLocation, useParams } from 'react-router-dom';
-import { axiosInstance } from '../../api/axiosInstance';
-import { SearchBar } from '../searchBar/searchBar';
 import { AuthContext } from '../../context/authContext';
 import { FaGear, FaBell, FaPlus } from "react-icons/fa6";
 import { TbDeviceDesktopSearch } from "react-icons/tb";
@@ -81,7 +79,7 @@ export const Navbar = () => {
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
-                
+
                 {/* Nav links */}
                 <nav>
                   <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
@@ -89,9 +87,9 @@ export const Navbar = () => {
                   <NavLink to="/edit-report">My reports</NavLink>
                   <NavLink to="/notifications" className="notification-icon"><FaBell /></NavLink>
                   <NavLink to="/profile">
-                     <img
+                    <img
                       src={
-                        user?.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -115,6 +113,7 @@ export const Navbar = () => {
               <div className="nav-links">
                 <NavLink to="/notifications">Notifications</NavLink>
                 <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                 <NavLink to="/edit-report">My reports</NavLink>
               </div>
 
@@ -124,7 +123,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -162,11 +161,12 @@ export const Navbar = () => {
 
                 {/* Nav links */}
                 <nav>
+                  <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                   <NavLink to="/notifications">Notifications</NavLink>
                   <NavLink to="/profile">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -238,6 +238,7 @@ export const Navbar = () => {
 
                 {/* Nav links */}
                 <nav>
+                  <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                   <NavLink to="/notifications">Notifications</NavLink>
                   <NavLink to="/profile">
                     <img
@@ -264,6 +265,7 @@ export const Navbar = () => {
                 Close
               </button>
               <div className="nav-links">
+                <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                 <NavLink to="/notifications">Notifications</NavLink>
                 <NavLink to="/create-report">Create a report</NavLink>
                 <NavLink to="/edit-report">My reports</NavLink>
@@ -314,6 +316,7 @@ export const Navbar = () => {
 
                 {/* Nav links */}
                 <nav>
+                  <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                   <NavLink to="/notifications">Notifications</NavLink>
                   <NavLink to="/profile">
                     <img
@@ -340,6 +343,7 @@ export const Navbar = () => {
                 Close
               </button>
               <div className="nav-links">
+                <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                 <NavLink to="/notifications">Notifications</NavLink>
                 <NavLink to="/create-report">Create a report</NavLink>
                 <NavLink to="/edit-report">My reports</NavLink>
@@ -351,7 +355,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -390,11 +394,12 @@ export const Navbar = () => {
 
                 {/* Nav links */}
                 <nav>
+                  <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                   <NavLink to="/notifications">Notifications</NavLink>
                   <NavLink to="/profile">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -416,6 +421,7 @@ export const Navbar = () => {
                 Close
               </button>
               <div className="nav-links">
+                <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                 <NavLink to="/notifications">Notifications</NavLink>
                 <NavLink to="/create-report">Create a report</NavLink>
                 <NavLink to="/edit-report">My reports</NavLink>
@@ -427,7 +433,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -466,11 +472,12 @@ export const Navbar = () => {
 
                 {/* Nav links */}
                 <nav>
+                  <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                   <NavLink to="/notifications">Notifications</NavLink>
                   <NavLink to="/profile">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -492,6 +499,7 @@ export const Navbar = () => {
                 Close
               </button>
               <div className="nav-links">
+                <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                 <NavLink to="/notifications">Manage Users</NavLink>
                 <NavLink to="/create-report">Reports</NavLink>
                 <NavLink to="/edit-report">Analytics</NavLink>
@@ -503,7 +511,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -542,11 +550,12 @@ export const Navbar = () => {
 
                 {/* Nav links */}
                 <nav>
+                  <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                   <NavLink to="/notifications">Notifications</NavLink>
                   <NavLink to="/profile">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -568,6 +577,7 @@ export const Navbar = () => {
                 Close
               </button>
               <div className="nav-links">
+                <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                 <NavLink to="/notifications">Notifications</NavLink>
                 <NavLink to="/create-report">Create a report</NavLink>
                 <NavLink to="/edit-report">My reports</NavLink>
@@ -579,7 +589,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -605,7 +615,7 @@ export const Navbar = () => {
           </>
         );
 
-        // Search page navbar
+      // Search page navbar
       case "/search":
         return (
           <>
@@ -615,16 +625,16 @@ export const Navbar = () => {
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
-                
+
                 {/* Nav links */}
                 <nav>
                   <NavLink to="/create-report"><FaPlus /> Create</NavLink>
                   <NavLink to="/edit-report">My reports</NavLink>
                   <NavLink to="/notifications" className="notification-icon"><FaBell /></NavLink>
                   <NavLink to="/profile">
-                     <img
+                    <img
                       src={
-                        user?.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
@@ -657,7 +667,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user.profile_url
+                        user && user.profile_url ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                       }
                       alt={
                         user ? user.username : "user"
