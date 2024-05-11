@@ -2,6 +2,7 @@ import "./dashboard.css";
 import { useEffect, useState, useContext } from "react";
 import { axiosInstance } from "../../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { Chart } from "../../../components/chart/Chart";
 import { FaRegUser, FaNewspaper, FaPersonCircleCheck } from "react-icons/fa6";
 import { AuthContext } from "../../../context/authContext";
 import { Navbar } from "../../../components/Navbar/Navbar";
@@ -11,14 +12,32 @@ export const AdminDashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [reports, setReports] = useState([]);
+  const [showChart, setShowChart] = useState(true);
   const [users, setUsers] = useState([]);
+
+  const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'Example Dataset',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const handleToggleChart = () => {
+    setShowChart(!showChart);
+  };
 
   const { user, token } = useContext(AuthContext);
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
-  }
+    }
     // const getReports = async () => {
     //   setLoading(true);
     //   try {
@@ -87,6 +106,12 @@ export const AdminDashboard = () => {
       <Navbar />
       <div className="admin-container-header">
         <h3>Admin Dashboard</h3>
+      </div>
+
+      {/* Chart */}
+      <div className="admin-container-chart">
+        {showChart && <Chart chartData={data} />}
+        <button onClick={handleToggleChart}>Toggle Chart</button>
       </div>
 
       {/* Container for the analytics */}

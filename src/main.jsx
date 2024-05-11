@@ -13,13 +13,14 @@ import { ReportUpdate } from './pages/reportUpdate/ReportUpdate';
 import { Logout } from './pages/auth/logout/Logout';
 import { ReportPage } from './pages/reportPage/ReportPage';
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import { AdminDashboard } from './pages/admin/dashboard/AdminDashboard';
 import { Upgrade } from './pages/upgrade/Upgrade';
+import { Search } from "./pages/search/Search";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/search",
+    element: <Search />,
   },
   {
     path: "/update-report/:id",

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export const SearchBar = ({ onChange }) => {
     return (
         <div className="search-bar">
-            <BsSearch />
+            <BsSearch color="gray"/>
             <input
                 type="text"
                 placeholder="Search"

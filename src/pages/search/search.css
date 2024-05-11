@@ -1,0 +1,121 @@
+.search-container {
+    padding: 1em 6%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.search-bar-container {
+    width: 60%;
+    margin: auto;
+}
+
+.search-history-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.search-history {
+    display: flex;
+    gap: 1em;
+}
+.search-history-item {
+    background-color: #f5f0b4;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.search-history-item:hover {
+    background-color: #dfd789;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.delete-icon{
+    color: var(--secondary-color);
+    cursor: pointer;
+}
+
+.delete-icon:hover {
+    color: red;
+}
+
+.start-search {
+    display: inline-flex;
+    min-height: 10em;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.507);
+    border-radius: 1em;
+    padding: 1em;
+    margin-top: 1em;
+    cursor: pointer;
+}
+
+.icon {
+    transition: transform 0.3s ease;
+}
+
+.start-search:hover {
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+}
+
+.start-search:hover .icon {
+    position: absolute;
+    transform: translateX(250%);
+}
+
+.start-search:hover .text {
+    margin-right: 20px; /* Adjust this value as needed */
+}
+
+.trending-search-container {
+    display: flex;
+    margin-top: 1em;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.trending-search {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.trending-search-item {
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
+    padding: 1em;
+}
+
+.trending-search-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.trending-search-item p {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 768px){
+    .search-container {
+        padding: 1em 5%;
+    }
+
+    .search-bar-container {
+        width: 80%;
+    }
+
+    
+}

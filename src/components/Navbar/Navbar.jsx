@@ -4,7 +4,8 @@ import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { axiosInstance } from '../../api/axiosInstance';
 import { SearchBar } from '../searchBar/searchBar';
 import { AuthContext } from '../../context/authContext';
-import { FaGear, FaBell, FaPlus, FaCircleXmark } from "react-icons/fa6";
+import { FaGear, FaBell, FaPlus } from "react-icons/fa6";
+import { TbDeviceDesktopSearch } from "react-icons/tb";
 
 
 export const Navbar = () => {
@@ -13,29 +14,6 @@ export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { user, token } = useContext(AuthContext);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-
-  const handleSearch = async (query) => {
-    setSearchQuery(query);
-    try {
-      // const response = await axiosInstance.get(`/search/${query}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`
-      //   }
-      // });
-
-      // Simulate API call to get search results
-      // Replace this with actual API call in real-world application
-      const results = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig'].filter(item =>
-        item.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-
-      setSearchResults(results);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prevState => !prevState);
@@ -80,7 +58,15 @@ export const Navbar = () => {
               <div className="nav-links">
                 <NavLink to="/about">FAQ</NavLink>
               </div>
-              <div className="login-link"><NavLink to="/login">Login</NavLink></div>
+              <div className="login-link">
+                {
+                  token ? (
+                    <NavLink to="/dashboard">Dashboard</NavLink>
+                  ) : (
+                    <NavLink to="/login">Login</NavLink>
+                  )
+                }
+              </div>
             </nav>
           </header>
         );
@@ -95,45 +81,17 @@ export const Navbar = () => {
                 <p className="logo">
                   <NavLink to="/dashboard">TrustGuardianHub</NavLink>
                 </p>
-
-                {/* Search bar */}
-                <div className="search-section">
-                  <SearchBar onChange={handleSearch} />
-
-                  {searchQuery && searchQuery.length > 0 ? (
-                    searchResults.length > 0 ? (
-                      <ul>
-                        {searchResults.map((item, index) => (
-                          <li key={index}>{item}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <ul>No results found for &quot;{searchQuery}&quot;</ul>
-                    )
-                  ) : null}
-                  {/* {searchResults.length > 0 ? (
-                    <ul>
-                      {searchResults.map((item, index) => (
-                        <li key={index}>{item}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <ul>No results found</ul>
-                  )} */}
-                </div>
-
+                
                 {/* Nav links */}
                 <nav>
+                  <NavLink to="/search"><TbDeviceDesktopSearch size={20} /> Search</NavLink>
                   <NavLink to="/create-report"><FaPlus /> Create</NavLink>
                   <NavLink to="/edit-report">My reports</NavLink>
                   <NavLink to="/notifications" className="notification-icon"><FaBell /></NavLink>
                   <NavLink to="/profile">
-                    <img
+                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user?.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -166,10 +124,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -211,10 +166,7 @@ export const Navbar = () => {
                   <NavLink to="/profile">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -247,10 +199,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -293,10 +242,7 @@ export const Navbar = () => {
                   <NavLink to="/profile">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -329,10 +275,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -375,10 +318,7 @@ export const Navbar = () => {
                   <NavLink to="/profile">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -411,10 +351,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -457,10 +394,7 @@ export const Navbar = () => {
                   <NavLink to="/profile">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -493,10 +427,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -539,10 +470,7 @@ export const Navbar = () => {
                   <NavLink to="/profile">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -575,10 +503,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -621,10 +546,7 @@ export const Navbar = () => {
                   <NavLink to="/profile">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -657,10 +579,7 @@ export const Navbar = () => {
                   <div className="user-info">
                     <img
                       src={
-                        user?.profile_url === import.meta.env.VITE_ENVIRONMENT === "production" ? `${import.meta.VITE_PRODUCTION_BACKEND_BASE_URL}/public/null` : `${import.meta.env.VITE_LOCAL_BACKEND_BASE_URL}/public/null` ||
-                          user?.profile_url === ""
-                          ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                          : user?.profile_url
+                        user.profile_url
                       }
                       alt={
                         user ? user.username : "user"
@@ -674,6 +593,83 @@ export const Navbar = () => {
                         <NavLink to="/notifications">Notifications</NavLink>
                         <NavLink to="/create-report">Create a report</NavLink>
                         <NavLink to="/edit-report">My reports</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
+                      </div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
+            </nav>
+          </>
+        );
+
+        // Search page navbar
+      case "/search":
+        return (
+          <>
+            <header>
+              {/* Logo section */}
+              <div className="container">
+                <p className="logo">
+                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                </p>
+                
+                {/* Nav links */}
+                <nav>
+                  <NavLink to="/create-report"><FaPlus /> Create</NavLink>
+                  <NavLink to="/edit-report">My reports</NavLink>
+                  <NavLink to="/notifications" className="notification-icon"><FaBell /></NavLink>
+                  <NavLink to="/profile">
+                     <img
+                      src={
+                        user?.profile_url
+                      }
+                      alt={
+                        user ? user.username : "user"
+                      }
+                      className="profile-image" />
+                  </NavLink>
+                </nav>
+
+                {/* Hamburger */}
+                <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                  <div className="bar"></div>
+                </button>
+              </div>
+            </header>
+
+            {/* Navbar for mobile */}
+            <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+              <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                Close
+              </button>
+              <div className="nav-links">
+                <NavLink to="/notifications">Notifications</NavLink>
+                <NavLink to="/create-report">Create a report</NavLink>
+                <NavLink to="/edit-report">My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user.profile_url
+                      }
+                      alt={
+                        user ? user.username : "user"
+                      }
+                      className="profile-image" />
+                    <p>{user ? user.username : "Guest"}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <NavLink to="/logout">Logout</NavLink>
                         <NavLink to="/upgrade">Upgrade 🚀</NavLink>
                       </div>
                       <div className="settings-overlay" onClick={toggleSettings}></div>
