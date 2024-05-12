@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { AuthContext } from "../../context/authContext";
 import { axiosInstance } from "../../api/axiosInstance";
 import { ReportItem } from "../../components/report/Report";
-import { Login } from "../auth/Login/Login";
 import { Loader } from "../../components/loader/Loader";
 import { BsFillFilePlusFill } from "react-icons/bs";
 import { Toast } from "../../components/toast/Toast";

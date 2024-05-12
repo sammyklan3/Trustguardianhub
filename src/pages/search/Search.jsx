@@ -1,6 +1,8 @@
 import { Navbar } from "../../components/Navbar/Navbar";
 import { SearchBar } from "../../components/searchBar/searchBar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/authContext";
+import { Loader } from "../../components/loader/Loader";
 import { parseNumberWithCommas } from "../../utils/numberUtil";
 import {
     FaRegTimesCircle,
@@ -13,32 +15,60 @@ import { axiosInstance } from "../../api/axiosInstance";
 import "./search.css";
 
 export const Search = () => {
-    const [searchTerm, setSearchterm] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
     const [searchHistories, setSearchHistories] = useState([]);
     const [trendingSearch, setTrendingSearch] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const { token } = useContext(AuthContext);
+
+    // This holds the timeout for the search input field
+    let timeoutId;
 
     function handleChange(value) {
-        setSearchterm(value);
+        setSearchQuery(value);
+        clearTimeout(timeoutId); // Clear any existing timeout
+        timeoutId = setTimeout(search, 2000); // Set a new timeout for 500 milliseconds (adjust as needed)
     }
+
 
     // Get previous search histories and recommended searches
     useEffect(() => {
+
+        // Get search history
         async function getSearchHistory() {
-            // const response = await axiosInstance.get("https://api.example.com/search-history");
-            // const data = await response.json();
-            setSearchHistories(
-                [
-                    "telegram",
-                    "whatsapp",
-                    "facebook",
-                ]
-            );
+            setLoading(true);
+            
+            try {
+                const response = await axiosInstance.get("/pastSearches", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setSearchHistories(response.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         // Get trending data
         async function getTrendingData() {
-            // const response = await fetch("https://api.example.com/recommended-search");
-            // const data = await response.json();
+            // try {
+            //     const response = await axiosInstance.get("/trendingSearch", {
+            //         headers: {
+            //             Authorization: `Bearer ${token}`
+            //         }
+            //     });
+            //     setTrendingSearch(response.data);
+            // } catch (error) {
+            //     console.log(error);
+            // }
+            // finally {
+            //     setLoading(false);
+            // }
+
             setTrendingSearch([
                 {
                     id: 1,
@@ -60,9 +90,51 @@ export const Search = () => {
         }
 
         getTrendingData();
-
         getSearchHistory();
     }, []);
+
+    // Search functionality send a req.query to backend 
+    async function search() {
+        try {
+            const response = axiosInstance.get("/search", {
+                params: {
+                    query: searchQuery
+                },
+
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    // delete search history selectively
+    async function deleteSearchHistory(searchId) {
+        try {
+            const response = await axiosInstance.delete(`/pastSearches/${searchId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.status === 200) {
+                // Remove the deleted search history from the state
+                setSearchHistories(searchHistories.filter(history => history.search_id !== searchId));
+            } else {
+                console.log(response.data.error);
+            };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    if (loading) {
+        return <Loader />
+    }
+    // Return the html structure
     return (
         <div className="search-container">
             <Navbar />
@@ -79,8 +151,8 @@ export const Search = () => {
                             {
                                 searchHistories.map((history, index) => (
                                     <div key={index} className="search-history-item">
-                                        <p>{history}</p>
-                                        <FaRegTimesCircle className="delete-icon" />
+                                        <p>{history.search_query}</p>
+                                        <FaRegTimesCircle className="delete-icon" onClick={() => deleteSearchHistory(history.search_id)} />
                                     </div>
                                 ))
                             }
@@ -95,7 +167,7 @@ export const Search = () => {
 
             {/* Display search results */}
             {
-                searchTerm.length > 0 ? (
+                searchQuery.length > 0 ? (
                     <div className="search-results-container">
                         <h3>Search Results</h3>
                         <div className="search-results">
@@ -112,8 +184,8 @@ export const Search = () => {
                     </div>
                 ) : (
                     <div className="start-search">
-                            <p className="icon"><FaSkating size={30}/></p>
-                            <p className="text">Start searching</p>
+                        <p className="icon"><FaSkating size={30} /></p>
+                        <p className="text">Start searching</p>
                     </div>
                 )
             }

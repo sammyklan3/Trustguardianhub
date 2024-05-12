@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     gap: 1em;
-    background-color: #f5f0b4;
-    padding: 15px 1em;
+    background-color: #eeeabd;
+    padding: 13px 1em;
     border-radius: 20px;
     width: 100%;
   }
@@ -15,10 +15,9 @@
     width: 100%;
   }
 
-  .search-bar:focus {
-    border: none;
+  .search-bar:hover {
+    border: 1px solid var(--primary-color);
     outline: none;
-    background-color: blue;
     width: 100%;
   }
   

@@ -2,9 +2,13 @@ import "./homepage.css";
 import landing from "../../assets/landing-img.png";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 export const Homepage = () => {
-  
+
+  const { token } = useContext(AuthContext);
+
   return (
     <div className="homepage-container">
       <Navbar />
@@ -19,7 +23,9 @@ export const Homepage = () => {
             Join Us Today and Help Build a Safer Freelance Marketplace!
           </p>
           <div className="login-link">
-            <NavLink to="/signup">Get Started</NavLink>
+            {token ? (
+              <NavLink to="/dashboard">Go to Dashboard</NavLink>
+            ) : <NavLink to="/login">Login</NavLink>}
           </div>
         </div>
       </div>
