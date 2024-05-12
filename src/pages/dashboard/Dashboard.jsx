@@ -13,7 +13,7 @@ import { Toast } from "../../components/toast/Toast";
 export const Dashboard = () => {
 
   const { user, token } = useContext(AuthContext);
-  const [reports, setReports] = useState(null);
+  const [reports, setReports] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -84,13 +84,6 @@ export const Dashboard = () => {
     <div className="dashboard-container">
       <Navbar />
 
-      <NavLink to="/create-report" className="dashboard-header-cont">
-        <div className="dashboard-header-text">
-          <h3>Create a report</h3>
-        </div>
-        <p><BsFillFilePlusFill /></p>
-      </NavLink>
-
       {error ? (
         <div className="error">{error}</div>
       ) : loading ? (
@@ -143,8 +136,7 @@ export const Dashboard = () => {
           <div className="no-reports">No reports available</div>
         </>
       )
-
-      }
+    }
 
       {showToast && (
         <Toast

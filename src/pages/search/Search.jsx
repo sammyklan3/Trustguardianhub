@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { Loader } from "../../components/loader/Loader";
 import { parseNumberWithCommas } from "../../utils/numberUtil";
+import { RiMenu2Fill } from "react-icons/ri";
 import {
     FaRegTimesCircle,
     FaEye,
@@ -13,12 +14,14 @@ import {
 } from "react-icons/fa";
 import { axiosInstance } from "../../api/axiosInstance";
 import "./search.css";
+import { FaTrash } from "react-icons/fa6";
 
 export const Search = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchHistories, setSearchHistories] = useState([]);
     const [trendingSearch, setTrendingSearch] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     const { token } = useContext(AuthContext);
 
@@ -28,8 +31,13 @@ export const Search = () => {
     function handleChange(value) {
         setSearchQuery(value);
         clearTimeout(timeoutId); // Clear any existing timeout
-        timeoutId = setTimeout(search, 2000); // Set a new timeout for 500 milliseconds (adjust as needed)
+        timeoutId = setTimeout(search, 500); // Set a new timeout for 500 milliseconds (adjust as needed)
     }
+
+    // Add the selected history to the search bar
+    function addHistoryToSearchBar(query) {
+        setSearchQuery(query);
+    };
 
 
     // Get previous search histories and recommended searches
@@ -38,7 +46,7 @@ export const Search = () => {
         // Get search history
         async function getSearchHistory() {
             setLoading(true);
-            
+
             try {
                 const response = await axiosInstance.get("/pastSearches", {
                     headers: {
@@ -111,6 +119,25 @@ export const Search = () => {
         }
     }
 
+    // Clear the whole search history
+    async function clearSearchHistory() {
+        try {
+            const response = await axiosInstance.delete("/clearSearches", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.status === 200) {
+                setSearchHistories([]);
+            } else {
+                console.log(response.data.error);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // delete search history selectively
     async function deleteSearchHistory(searchId) {
         try {
@@ -146,12 +173,24 @@ export const Search = () => {
             {
                 searchHistories.length > 0 && searchHistories ? (
                     <div className="search-history-container">
-                        <h3>Search History</h3>
+                        <div className="search-history-header">
+                            <h3>Search History</h3>
+                            <button onClick={() => setShowMenu(!showMenu)}><RiMenu2Fill /></button>
+                            {
+                                showMenu ? (
+                                    <div className="search-history-menu">
+                                        <p onClick={clearSearchHistory}>Clear history <FaTrash color="red"/></p>
+                                        <p>Edit history</p>
+                                    </div>
+                                ) : (null
+                                )
+                            }
+                        </div>
                         <div className="search-history">
                             {
                                 searchHistories.map((history, index) => (
-                                    <div key={index} className="search-history-item">
-                                        <p>{history.search_query}</p>
+                                    <div key={index} className="search-history-item" >
+                                        <p onClick={() => addHistoryToSearchBar(history.search_query)}>{history.search_query}</p>
                                         <FaRegTimesCircle className="delete-icon" onClick={() => deleteSearchHistory(history.search_id)} />
                                     </div>
                                 ))

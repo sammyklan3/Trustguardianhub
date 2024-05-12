@@ -16,5 +16,5 @@ export const SearchBar = ({ onChange }) => {
 };
 
 SearchBar.propTypes = {
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
 };

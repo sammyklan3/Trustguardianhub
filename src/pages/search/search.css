@@ -10,6 +10,43 @@
     margin: auto;
 }
 
+.search-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-history-header button {
+    background-color: transparent;
+    padding: 0.5em 1em;
+    border: none;
+    cursor: pointer;
+}
+
+.search-history-menu {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.11);
+    backdrop-filter: blur(10px);
+    padding: 1em;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.301);
+    border-radius: 2em;
+    right: 6em;
+    top: 11em;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.search-history-menu p {
+    cursor: pointer;
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+
+}
+
+
 .search-history-container {
     display: flex;
     flex-direction: column;
