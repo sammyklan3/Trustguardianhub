@@ -1,23 +1,37 @@
 .toast {
+    display: flex;
+    align-items: center;
+    gap: 1em;
     position: fixed;
-    top: -100px; /* Start off screen */
+    top: -100px;
+    /* Start off screen */
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 1em;
+    border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     opacity: 0;
-    transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out; /* Transition opacity and top */
+    transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+    /* Transition opacity and top */
+}
+
+.toast p {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
 }
 
 .toast.show {
-    top: 2em; /* Slide in */
+    top: 2em;
+    /* Slide in */
     opacity: 1;
+    transform: all 0.3s ease-in-out;
 }
 
 .toast.hide {
-    top: -100px; /* Slide out */
+    top: -100px;
+    /* Slide out */
     opacity: 0;
 }
 
@@ -25,10 +39,17 @@
 .toast.error {
     background-color: red;
     color: white;
-    
+
 }
 
 .toast.success {
     background-color: green;
     color: white;
+    transform: all 0.3s ease-in-out;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+    .toast p {
+        text-wrap: nowrap;
+    }
 }

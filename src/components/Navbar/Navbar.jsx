@@ -164,7 +164,7 @@ export const Navbar = () => {
                 <nav>
                   <NavLink to="/search"><RiSearch2Line size={20} /> Search</NavLink>
                   <NavLink to="/edit-report"><FaPaperclip /> My reports</NavLink>
-                  <NavLink to="/notifications"><FaBell size={20}/></NavLink>
+                  <NavLink to="/notifications"><FaBell size={20} /></NavLink>
                   <NavLink to="/profile">
                     <img
                       src={
@@ -241,7 +241,9 @@ export const Navbar = () => {
                 {/* Nav links */}
                 <nav>
                   <NavLink to="/search"><RiSearch2Line size={20} /> Search</NavLink>
-                  <NavLink to="/notifications"><FaBell /></NavLink>
+                  <NavLink to="/notifications"><FaBell /> Notifications</NavLink>
+                  <NavLink to="/create-report"><FaPlus /> Create a report</NavLink>
+                  <NavLink to="/edit-report"><FaPaperclip /> My reports</NavLink>
                   <NavLink to="/profile">
                     <img
                       src={

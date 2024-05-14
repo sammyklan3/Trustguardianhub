@@ -1,6 +1,7 @@
 import "./toast.css";
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
+import { CiCircleCheck } from "react-icons/ci";
 
 export const Toast = ({ message, duration, onClose, type }) => {
 
@@ -20,7 +21,7 @@ export const Toast = ({ message, duration, onClose, type }) => {
     return (
         <div className={`toast ${visible ? "show" : "hide"} ${type}`}>
             <div className="toast-content">
-                {message}
+                <p>{message}</p>
             </div>
         </div>
     );
