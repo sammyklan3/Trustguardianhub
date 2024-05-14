@@ -1,0 +1,265 @@
+/* Page container */
+.user-profile-page {
+    padding: 10px 6%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.user-profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+/* User cover image */
+.user-profile-cover {
+    width: 100%;
+    height: 20em;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* User profile image */
+.user-profile-image {
+    position: absolute;
+    left: 10em;
+    top: 21em;
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for the main content and sidebar */
+.user-profile-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3em;
+    gap: 1em;
+    width: 100%;
+}
+
+/* User reports area */
+.user-profile-content-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+}
+
+/* User information container */
+.user-profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+/* User important details */
+.user-profile-info-details {
+    display: flex;
+    gap: 1em;
+    width: 100%;
+}
+
+/* text styling for the user details */
+.user-profile-info-details p {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    color: rgb(117, 116, 116);
+}
+
+/* Report section container */
+.user-profile-reports {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 2em;
+}
+
+/* Mobile actions */
+.user-profile-mobile-actions {
+    display: none;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.user-profile-mobile-actions button {
+    padding: 10px 1em;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+/* List container for each report */
+.user-profile-reports-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-gap: 0;
+}
+
+/* Single report syling */
+.user-profile-report {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Styling report on hover */
+.user-profile-report:hover{
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.425);
+    padding: 10px;
+}
+
+/* Image(s) for the reports */
+.user-profile-report-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.user-empty-reports {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    color: rgb(117, 116, 116);
+}
+
+.user-profile-report-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.user-profile-report-stats p {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: rgb(117, 116, 116);
+}
+
+.empty-reports-image {
+    width: 20em;
+    height: 20em;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+/* Sidebar */
+.user-profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    height: 100%;
+}
+
+/* Sidebar actions */
+.user-profile-sidebar-actions {
+    display: flex;
+    gap: 2em;
+}
+
+/* Sidebar actions buttons */
+.user-profile-sidebar-actions button {
+    padding: 10px 1em;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+/* Sidebar follow button */
+.user-profile-sidebar-follow {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Sidebar message button */
+.user-profile-sidebar-message {
+    background-color: black;
+    color: white;
+}
+
+/* User summary details */
+.user-profile-sidebar-summary {
+    display: flex;
+    gap: 1em;
+}
+
+.user-profile-sidebar-summary-item {
+    display: flex;
+    flex-direction: column;
+    background-color: lightblue;
+    color: #3735c4;
+    font-weight: 500;
+    padding: 0.5em;
+    min-width: 10em;
+    border-radius: 10px;
+    text-wrap: nowrap;
+    gap: 0.5em;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+    .user-profile-page {
+        padding: 10px 6%;
+    }
+
+    .user-profile-mobile-actions {
+        display: flex;
+    }
+
+    .user-profile-cover {
+        height: 12em;
+    }
+
+    .user-profile-image {
+        width: 80px;
+        height: 80px;
+        top: 13em;
+        left: 3em;
+    }
+
+    .user-profile-content {
+        margin-top: 2em;
+    }
+
+    .user-profile-info-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 2em;
+    }
+
+    .user-profile-sidebar {
+        display: none;
+    }
+
+    .user-profile-reports-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        grid-gap: 0;
+    }
+
+    .empty-reports-image {
+        width: 2em;
+        height: 20em;
+    }
+}

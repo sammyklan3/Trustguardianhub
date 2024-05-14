@@ -5,6 +5,7 @@ import { BsFillTrashFill, BsClock } from "react-icons/bs";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
 import { NavLink } from "react-router-dom";
+import { calculateTimeSincePosted } from "../../utils/timeCalc";
 import { DialogBox } from "../dialogBox/DialogBox";
 
 export const ReportItem = ({ title, image, username, profile_pic, user_id, onDelete, date, report_id }) => {
@@ -20,34 +21,11 @@ export const ReportItem = ({ title, image, username, profile_pic, user_id, onDel
 
   useEffect(() => {
     // Function to calculate time since posted
-    const calculateTimeSincePosted = () => {
-      const currentDate = new Date();
-      const postedDate = new Date(date);
-      const timeDifference = currentDate - postedDate;
-      const seconds = Math.floor(timeDifference / 1000);
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
-      const weeks = Math.floor(days / 7);
-
-      if (weeks > 0) {
-        setTimeSincePosted(`${weeks}w ago`);
-      } else if (days > 0) {
-        setTimeSincePosted(`${days}d ago`);
-      } else if (hours > 0) {
-        setTimeSincePosted(`${hours}h ago`);
-      } else if (minutes > 0) {
-        setTimeSincePosted(`${minutes}m ago`);
-      } else {
-        setTimeSincePosted(`Posted now`);
-      }
-    };
-
-    calculateTimeSincePosted();
+    setTimeSincePosted(calculateTimeSincePosted(date));
 
     // Update time every minute
     const interval = setInterval(() => {
-      calculateTimeSincePosted();
+      setTimeSincePosted(calculateTimeSincePosted(date));
     }, 60000);
 
     return () => clearInterval(interval);
@@ -56,10 +34,13 @@ export const ReportItem = ({ title, image, username, profile_pic, user_id, onDel
   return (
     <li className="report-details">
       <div className="report-header">
-        <div className="report-header-info">
+        {/* Display the username and profile picture */}
+        <NavLink
+          to={ username === user.username ? "/profile" : `/user/${username}`}
+          className="report-header-info">
           <img src={profile_pic} alt="profile" className="report-header-image" />
           <p>{username === user.username ? "You" : username}</p>
-        </div>
+        </NavLink>
 
         {/* Display the time */}
         <div className="time-info">
@@ -86,7 +67,7 @@ export const ReportItem = ({ title, image, username, profile_pic, user_id, onDel
                 onCancel={toggleDialog}
               />
             )}
-            
+
           </>
         ) : (
           <NavLink to={`/report/${report_id}`} className="report-open">Open</NavLink>

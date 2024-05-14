@@ -122,7 +122,7 @@
 }
 
 .container nav a:hover {
-  background-color: var(--hover-color);
+  background-color: #ddd8d8;
 }
 
 .search-section {
@@ -157,8 +157,8 @@
 }
 
 .profile-image {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--primary-color);
@@ -251,7 +251,7 @@
 }
 
 .mobile-nav a:hover {
-  background-color: lightcyan;
+  background-color: #ddd8d8;
 }
 
 .mobile-nav-toggle {

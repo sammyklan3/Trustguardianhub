@@ -17,6 +17,14 @@
     display: flex;
     gap: 10px;
     align-items: center;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.report-header a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
 }
 
 .time-info{
@@ -29,12 +37,18 @@
     height: 30px;
     border-radius: 50%;
     width: 30px;
+    object-fit: cover;
 }
 
 .report-info {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+.report-header-info:hover {
+    cursor: pointer;
+    background-color: #ddd8d8;
 }
 
 .report-actions {

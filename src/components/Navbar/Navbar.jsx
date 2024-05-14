@@ -9,7 +9,7 @@ import { GoGraph } from "react-icons/go";
 
 export const Navbar = () => {
   const location = useLocation();
-  const { id } = useParams();
+  const { id, username } = useParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { user, token } = useContext(AuthContext);
@@ -163,7 +163,8 @@ export const Navbar = () => {
                 {/* Nav links */}
                 <nav>
                   <NavLink to="/search"><RiSearch2Line size={20} /> Search</NavLink>
-                  <NavLink to="/notifications"><FaBell /></NavLink>
+                  <NavLink to="/edit-report"><FaPaperclip /> My reports</NavLink>
+                  <NavLink to="/notifications"><FaBell size={20}/></NavLink>
                   <NavLink to="/profile">
                     <img
                       src={
@@ -692,6 +693,82 @@ export const Navbar = () => {
             </nav>
           </>
         );
+
+      case `/user/${username}`:
+        return (
+          <>
+            <header>
+              {/* Logo section */}
+              <div className="container">
+                <p className="logo">
+                  <NavLink to="/dashboard">TrustGuardianHub</NavLink>
+                </p>
+                {/* Nav links */}
+                <nav>
+                  <NavLink to="/create-report"><FaPlus /> Create</NavLink>
+                  <NavLink to="/edit-report"><FaPaperclip /> My reports</NavLink>
+                  <NavLink to="/notifications" className="notification-icon"><FaBell /></NavLink>
+                  <NavLink to="/profile">
+                    <img
+                      src={
+                        user && user.profile_url.length > 0 ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                      }
+                      alt={
+                        user ? user.username : "user"
+                      }
+                      className="profile-image" />
+                  </NavLink>
+                </nav>
+
+                {/* Hamburger */}
+                <button className={`hamburger ${isMobileMenuOpen ? 'is-active' : ''}`} onClick={toggleMobileMenu}>
+                  <div className="bar"></div>
+                </button>
+              </div>
+            </header>
+
+            {/* Navbar for mobile */}
+            <nav className={`mobile-nav ${isMobileMenuOpen ? 'is-active' : ''}`} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove}>
+              <button className="mobile-nav-toggle" onClick={toggleMobileMenu}>
+                Close
+              </button>
+              <div className="nav-links">
+                <NavLink to="/notifications"><FaBell /> Notifications</NavLink>
+                <NavLink to="/create-report"><FaPlus /> Create a report</NavLink>
+                <NavLink to="/edit-report"><FaPaperclip /> My reports</NavLink>
+              </div>
+
+              <div className="nav-footer">
+                <hr />
+                <div className="footer-container">
+                  <div className="user-info">
+                    <img
+                      src={
+                        user && user.profile_url.length > 0 ? user.profile_url : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                      }
+                      alt={
+                        user ? user.username : "user"
+                      }
+                      className="profile-image" />
+                    <p>{user ? user.username : "Guest"}</p>
+                  </div>
+                  {settingsOpen ? (
+                    <>
+                      <div className="settings-options">
+                        <NavLink to="/profile">Profile</NavLink>
+                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink to="/upgrade">Upgrade 🚀</NavLink>
+                      </div>
+                      <div className="settings-overlay" onClick={toggleSettings}></div>
+                    </>
+                  ) : null}
+                  <p onClick={toggleSettings} className="settings-toggle"><FaGear fontSize={20} /></p>
+                </div>
+              </div>
+            </nav>
+          </>
+        );
+
 
       default:
         return null;
