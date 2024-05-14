@@ -8,8 +8,11 @@ import { Toast } from "../../../components/toast/Toast";
 export const Signup = () => {
 
   const [signupData, setSignupData] = useState({
+    firstName: "",
+    lastName: "",
     username: "",
     email: "",
+    phoneNumber: "",
     password: ""
   });
   const [showToast, setShowToast] = useState(false);
@@ -63,6 +66,23 @@ export const Signup = () => {
           <hr />
 
           <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="firstName"
+              value={signupData.firstName}
+              onChange={handleChange}
+              placeholder="firstname"
+              required
+            />
+
+            <input
+              type="text"
+              name="lastName"
+              value={signupData.lastName}
+              onChange={handleChange}
+              placeholder="lastname"
+              required
+            />
 
             <input
               type="text"
@@ -83,6 +103,15 @@ export const Signup = () => {
             />
 
             <input
+              type="number"
+              name="phoneNumber"
+              value={signupData.phoneNumber}
+              onChange={handleChange}
+              placeholder="2547xxxxxxxx"
+              required
+            />
+
+            <input
               type="password"
               name="password"
               value={signupData.password}
@@ -93,7 +122,7 @@ export const Signup = () => {
             <button type="submit" disabled={isLoading}>
               {isLoading ? <div className="loader"></div> : <p>Let&apos;s go</p>}
             </button>
-            
+
             {showToast && (
               <Toast
                 message={toastMessage}

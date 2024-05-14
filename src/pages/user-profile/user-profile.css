@@ -45,6 +45,13 @@
     width: 100%;
 }
 
+/* report h2 header */
+.user-profile-reports-header {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
+
 /* User reports area */
 .user-profile-content-main {
     display: flex;
@@ -109,6 +116,7 @@
 /* Single report syling */
 .user-profile-report {
     display: flex;
+    text-decoration: none;
     flex-direction: column;
     gap: 7px;
     cursor: pointer;
@@ -259,7 +267,7 @@
     }
 
     .empty-reports-image {
-        width: 2em;
+        width: 80%;
         height: 20em;
     }
 }
