@@ -25,7 +25,7 @@ export const Homepage = () => {
           <div className="login-link">
             {token ? (
               <NavLink to="/dashboard">Go to Dashboard</NavLink>
-            ) : <NavLink to="/login">Login</NavLink>}
+            ) : <NavLink to="/signup">Get started</NavLink>}
           </div>
         </div>
       </div>

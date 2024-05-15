@@ -1,5 +1,5 @@
 import "./user-profile.css";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate} from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import copy from "copy-to-clipboard";
 import { AuthContext } from "../../context/authContext";
@@ -12,14 +12,17 @@ import { parseNumberWithCommas } from "../../utils/numberUtil";
 import { FaStar, FaRegThumbsUp, FaEye, FaComment, FaPlus, FaRankingStar, FaShare } from "react-icons/fa6";
 import { CiCircleCheck } from "react-icons/ci";
 import { RiMessage2Line } from "react-icons/ri";
+import { RingLoader } from "react-spinners";
 import { Toast } from "../../components/toast/Toast";
 
 export const UserProfile = () => {
+    const navigate = useNavigate();
     const { username } = useParams();
-    const { token } = useContext(AuthContext);
-    const [userData, setUserData] = useState({});
+    const { token, user } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
+    const [userData, setUserData] = useState(null);
     const [isFollowing, setIsFollowing] = useState(false);
+    const [followLoading, setFollowLoading] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState("");
@@ -35,6 +38,8 @@ export const UserProfile = () => {
     // Function to follow a user
     async function followUser() {
         try {
+            setFollowLoading(true);
+
             const response = await axiosInstance.post(`/follow/${userData.user.userId}`, null, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -48,12 +53,16 @@ export const UserProfile = () => {
             }
         } catch (error) {
             console.error("Error following user", error);
+        } finally {
+            setFollowLoading(false);
         }
     };
 
     // Function to unfollow a user
     async function unfollowUser() {
         try {
+            setFollowLoading(true);
+
             const response = await axiosInstance.delete(`/unfollow/${userData.user.userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -68,12 +77,20 @@ export const UserProfile = () => {
         } catch (error) {
             console.log("Error unfollowing user", error);
         }
+        finally {
+            setFollowLoading(false);
+        }
     };
 
     // Get the searched user data
     useEffect(() => {
         // Change the title of the page
         document.title = `TrustGuardianHub | ${username}`;
+
+        // Redirect user to profile page if they are trying to view their own profile
+        if(username === user?.username) {
+            navigate("/profile");
+        };
 
         async function getUserData() {
             try {
@@ -87,9 +104,9 @@ export const UserProfile = () => {
                 console.log(response.data);
                 setUserData(response.data.userProfile);
 
-                if(response.data.userProfile.user.checkFollow === true) {
-                    setIsFollowing(true);
-                }
+                // Set isFollowing after the user data has been fetched
+                setIsFollowing(response.data?.userProfile.user.checkFollow);
+
             } catch (error) {
                 console.error('Error fetching user data:', error);
             } finally {
@@ -100,11 +117,14 @@ export const UserProfile = () => {
         getUserData();
     }, [username]);
 
+    
+
     if (loading) {
         return <Loader />
     }
 
-    if (!userData || !userData.user) {
+    // Render error element if the user does not exist
+    if (!loading && !userData) {
         return (
             <div className="user-profile-page">
                 <Navbar />
@@ -147,16 +167,16 @@ export const UserProfile = () => {
                         <div className="user-profile-mobile-actions">
                             {
                                 userData.user.checkFollow === true && isFollowing ? (
-                                    <button className="user-profile-sidebar-following" onClick={unfollowUser}><CiCircleCheck size={15} />Following</button>
+                                    <button className="user-profile-sidebar-following" onClick={unfollowUser} disabled={followLoading}>
+                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><CiCircleCheck size={15}/> Following</> } 
+                                    </button>
                                 ) : (
-                                    <button className="user-profile-sidebar-follow" onClick={followUser}><FaPlus />Follow</button>
+                                    <button className="user-profile-sidebar-follow" onClick={followUser} disabled={followLoading}>
+                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><FaPlus /> Follow</>}
+                                    </button>
                                 )
                             }
-                            {/* {isFollowing ? (
-                                <button className="user-profile-sidebar-following" onClick={unfollowUser}><CiCircleCheck />Following</button>
-                            ) : (
-                                <button className="user-profile-sidebar-follow" onClick={followUser}><FaPlus />Follow</button>
-                            )} */}
+
                             <button className="user-profile-sidebar-message"><RiMessage2Line size={18} />Message</button>
                         </div>
 
@@ -198,9 +218,13 @@ export const UserProfile = () => {
                         <div className="user-profile-sidebar-actions">
                             {
                                 userData.user.checkFollow === true && isFollowing ? (
-                                    <button className="user-profile-sidebar-following" onClick={unfollowUser}><CiCircleCheck size={15} />Following</button>
+                                    <button className="user-profile-sidebar-following" onClick={unfollowUser} disabled={followLoading}>
+                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><CiCircleCheck size={15}/> Following</> } 
+                                    </button>
                                 ) : (
-                                    <button className="user-profile-sidebar-follow" onClick={followUser}><FaPlus />Follow</button>
+                                    <button className="user-profile-sidebar-follow" onClick={followUser} disabled={followLoading}>
+                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><FaPlus /> Follow</> }
+                                    </button>
                                 )
                             }
                             <button className="user-profile-sidebar-message"><RiMessage2Line size={18} />Message</button>
