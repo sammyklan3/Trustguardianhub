@@ -1,19 +1,18 @@
 import "./user-profile.css";
-import { NavLink, useParams, useNavigate} from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import copy from "copy-to-clipboard";
 import { AuthContext } from "../../context/authContext";
 import { axiosInstance } from "../../api/axiosInstance";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Loader } from "../../components/loader/Loader";
-import { CiLocationOn, CiCalendar } from "react-icons/ci";
-import { parseDate } from "../../utils/dateParser";
-import { parseNumberWithCommas } from "../../utils/numberUtil";
+import { CiLocationOn, CiCalendar, CiCircleCheck } from "react-icons/ci";
 import { FaStar, FaRegThumbsUp, FaEye, FaComment, FaPlus, FaRankingStar, FaShare } from "react-icons/fa6";
-import { CiCircleCheck } from "react-icons/ci";
 import { RiMessage2Line } from "react-icons/ri";
 import { RingLoader } from "react-spinners";
 import { Toast } from "../../components/toast/Toast";
+import { parseDate } from "../../utils/dateParser";
+import { parseNumberWithCommas } from "../../utils/numberUtil";
 
 export const UserProfile = () => {
     const navigate = useNavigate();
@@ -28,7 +27,7 @@ export const UserProfile = () => {
     const [toastType, setToastType] = useState("");
 
     // Function for copying the current URL to the clipboard
-    function copyURL() {
+    const copyURL = () => {
         copy(window.location.href);
         setShowToast(true);
         setToastType("success");
@@ -36,14 +35,11 @@ export const UserProfile = () => {
     };
 
     // Function to follow a user
-    async function followUser() {
+    const followUser = async () => {
         try {
             setFollowLoading(true);
-
             const response = await axiosInstance.post(`/follow/${userData.user.userId}`, null, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
+                headers: { Authorization: `Bearer ${token}` },
             });
             if (response.status === 200) {
                 setIsFollowing(true);
@@ -59,14 +55,11 @@ export const UserProfile = () => {
     };
 
     // Function to unfollow a user
-    async function unfollowUser() {
+    const unfollowUser = async () => {
         try {
             setFollowLoading(true);
-
             const response = await axiosInstance.delete(`/unfollow/${userData.user.userId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
+                headers: { Authorization: `Bearer ${token}` },
             });
             if (response.status === 200) {
                 setIsFollowing(false);
@@ -75,56 +68,44 @@ export const UserProfile = () => {
                 setToastMessage(`You are no longer following ${username}`);
             }
         } catch (error) {
-            console.log("Error unfollowing user", error);
-        }
-        finally {
+            console.error("Error unfollowing user", error);
+        } finally {
             setFollowLoading(false);
         }
     };
 
     // Get the searched user data
     useEffect(() => {
-        // Change the title of the page
         document.title = `TrustGuardianHub | ${username}`;
 
-        // Redirect user to profile page if they are trying to view their own profile
-        if(username === user?.username) {
+        if (username === user?.username) {
             navigate("/profile");
-        };
+        }
 
-        async function getUserData() {
+        const getUserData = async () => {
             try {
                 setLoading(true);
                 const response = await axiosInstance.get(`/user/${username}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    }
+                    headers: { Authorization: `Bearer ${token}` },
                 });
-
-                console.log(response.data);
                 setUserData(response.data.userProfile);
-
-                // Set isFollowing after the user data has been fetched
-                setIsFollowing(response.data?.userProfile.user.checkFollow);
-
+                setIsFollowing(response.data.userProfile.user.checkFollow);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             } finally {
                 setLoading(false);
-            };
+            }
         };
 
         getUserData();
-    }, [username]);
-
-    
+    }, [username, user?.username, token, navigate]);
 
     if (loading) {
-        return <Loader />
+        return <Loader />;
     }
 
     // Render error element if the user does not exist
-    if (!loading && !userData) {
+    if (!userData) {
         return (
             <div className="user-profile-page">
                 <Navbar />
@@ -165,18 +146,15 @@ export const UserProfile = () => {
 
                         {/* Mobile actions buttons */}
                         <div className="user-profile-mobile-actions">
-                            {
-                                userData.user.checkFollow === true && isFollowing ? (
-                                    <button className="user-profile-sidebar-following" onClick={unfollowUser} disabled={followLoading}>
-                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><CiCircleCheck size={15}/> Following</> } 
-                                    </button>
-                                ) : (
-                                    <button className="user-profile-sidebar-follow" onClick={followUser} disabled={followLoading}>
-                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><FaPlus /> Follow</>}
-                                    </button>
-                                )
-                            }
-
+                            {isFollowing ? (
+                                <button className="user-profile-sidebar-following" onClick={unfollowUser} disabled={followLoading}>
+                                    {followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><CiCircleCheck size={15}/> Following</>}
+                                </button>
+                            ) : (
+                                <button className="user-profile-sidebar-follow" onClick={followUser} disabled={followLoading}>
+                                    {followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><FaPlus /> Follow</>}
+                                </button>
+                            )}
                             <button className="user-profile-sidebar-message"><RiMessage2Line size={18} />Message</button>
                         </div>
 
@@ -213,20 +191,17 @@ export const UserProfile = () => {
 
                     {/* Sidebar */}
                     <div className="user-profile-sidebar">
-
                         {/* Sidebar actions buttons */}
                         <div className="user-profile-sidebar-actions">
-                            {
-                                userData.user.checkFollow === true && isFollowing ? (
-                                    <button className="user-profile-sidebar-following" onClick={unfollowUser} disabled={followLoading}>
-                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><CiCircleCheck size={15}/> Following</> } 
-                                    </button>
-                                ) : (
-                                    <button className="user-profile-sidebar-follow" onClick={followUser} disabled={followLoading}>
-                                        { followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><FaPlus /> Follow</> }
-                                    </button>
-                                )
-                            }
+                            {isFollowing ? (
+                                <button className="user-profile-sidebar-following" onClick={unfollowUser} disabled={followLoading}>
+                                    {followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><CiCircleCheck size={15}/> Following</>}
+                                </button>
+                            ) : (
+                                <button className="user-profile-sidebar-follow" onClick={followUser} disabled={followLoading}>
+                                    {followLoading ? <><RingLoader size={15} color="white"/> Processing</> : <><FaPlus /> Follow</>}
+                                </button>
+                            )}
                             <button className="user-profile-sidebar-message"><RiMessage2Line size={18} />Message</button>
                         </div>
 
