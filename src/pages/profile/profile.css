@@ -181,7 +181,7 @@
 }
 
 .profile-mini-details p:hover, .profile-stats p:hover {
-  background-color: rgba(128, 128, 128, 0.5);
+  background-color: rgba(128, 128, 128, 0.411);
 }
 
 @media only screen and (min-width: 200px) and (max-width: 768px) {
