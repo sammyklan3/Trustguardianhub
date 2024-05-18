@@ -17,11 +17,11 @@ const ProfileStats = ({ profileData }) => (
     <p><CiMail />{profileData?.email}</p>
     <p><CiPhone />{profileData?.phone}</p>
     <p><span>@</span>{profileData?.username}</p>
-    <p><span><FaStar color="orange"/></span>{profileData?.points} points</p>
+    <p><span><FaStar color="orange" /></span>{profileData?.points} points</p>
   </div>
 );
 
-// Component to display followers and following
+// Component to display followers and following on mobile screens
 const ProfileFollowers = ({ profileData }) => (
   <div className="profile-followers">
     <p className="user-followers">
@@ -35,6 +35,19 @@ const ProfileFollowers = ({ profileData }) => (
   </div>
 );
 
+// Component to display followers and following on wide screens
+const ProfileFollowersWide = ({ profileData }) => (
+  <div className="profile-followers-wide">
+    <p className="user-followers">
+      <span><IoIosArrowDown /></span>
+      <span>{profileData?.followers} {profileData && profileData.followers === 1 ? "follower" : "followers"}</span>
+    </p>
+    <p className="user-following">
+      <span><IoIosArrowDown /></span>
+      <span>{profileData?.following} following</span>
+    </p>
+  </div>
+);
 export const Profile = () => {
   const { token } = useContext(AuthContext);
   const [profileData, setProfileData] = useState(null);
@@ -111,6 +124,57 @@ export const Profile = () => {
 
           {/* Display followers and following */}
           <ProfileFollowers profileData={profileData} />
+        </div>
+
+        {/* Container for user's posts and sidebar */}
+        <div className="profile-posts">
+          <div className="profile-posts-container">
+            <h2>Your reports</h2>
+            <hr />
+            <div className="profile-posts-list">
+              {/* Display user's posts */}
+              {profileData.reports?.length > 1 ? (
+                profileData.reports.map((report) => (
+                  <div key={report.id} className="profile-post">
+                    <img src={report.image_url} alt={report.title} />
+                    <p>{report.title}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="user-empty-reports">
+                  <img src="https://cdni.iconscout.com/illustration/premium/thumb/cat-is-trying-to-open-the-safe-6463185-5349466.png?f=webp" alt="empty-reports" className="empty-reports-image" />
+                  <h2>You have no reports {":("}</h2>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="profile-sidebar">
+            <ProfileFollowersWide profileData={profileData} />
+            {/* User mini details */}
+            <div className="profile-mini-details">
+              <p>You have {profileData.reports?.length}reports</p>
+              <p>{profileData?.ranking} ranking</p>
+              <p>You are on {profileData?.tier} tier</p>
+            </div>
+            {/* Show pending posts */}
+            <div className="profile-pending-posts">
+              <h2>Pending reports</h2>
+              <hr />
+              {/* CHeck if the pending posts is available and if is  an array or an object */}
+              {profileData.pending_reports?.length > 1 ? (
+                profileData.pending_reports.map((report) => (
+                  <div key={report.id} className="profile-pending-post">
+                    <img src={report.image_url} alt={report.title} />
+                    <p>{report.title}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No pending posts</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
