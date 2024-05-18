@@ -3,5 +3,144 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
+  width: 100%;
   padding: 10px 6%;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.profile-cover img {
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 20em;
+  object-fit: cover;
+}
+
+.profile-followers {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+}
+
+.profile-followers p {
+  background-color: var(--secondary-color);
+  width: 100%;
+  padding: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  gap: 0.5em;
+  transition: background-color 0.3s, color 0.3s ease;
+}
+
+.profile-followers p:hover {
+  background-color: var(--hover-color);
+  color: black;
+}
+
+.user-followers {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.user-following {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+}
+
+.profile-avatar {
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  left: 10em;
+  top: 21em;
+  left: 10em;
+  top: 21em;
+}
+
+.profile-avatar p {
+  position: absolute;
+  top: -2px;
+  border-radius: 50%;
+  font-weight: 600;
+  color: gray;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.profile-avatar p:hover {
+  color: black;
+  background-color: rgba(0, 0, 0, 0.158);
+}
+
+.profile-avatar img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.profile-stats {
+  display: flex;
+  gap: 1em;
+}
+
+.profile-stats p {
+  color: rgb(110, 110, 110);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.301);
+}
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+  .profile-cover img {
+    height: 12em;
+  }
+
+  .profile-avatar {
+    top: 13em;
+    left: 3em;
+  }
+
+  .profile-avatar img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+  }
+
+  .profile-stats p {
+    padding: 0;
+    background-color: transparent;
+  }
+
 }
